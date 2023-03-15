@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap');
 
 :root {
-  --text-color: #000;
+  --text-color-1: rgb(24, 18, 43, 1);
+  --text-color-1-hover: rgb(24, 18, 43, 0.8);
+  --text-color-2: rgb(255, 251, 245);
+  --text-color-2-hover: rgb(255, 251, 245, 0.8);
+  --header-color: #609966;
+  --header-color-2: #9dc08b;
+
+  --max-width: 120rem;
 }
 
 * {
@@ -31,4 +38,11 @@ input,
 a[href] {
   color: var(--text-color);
   text-decoration: none;
+  display: inline-block;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  text-transform: capitalize;
 }
