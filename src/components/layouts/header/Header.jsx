@@ -53,19 +53,19 @@ const Header = () => {
               <div className={cx('header-option')}>
                 <div className={cx('header-option-item')}>
                   <IoIosGitCompare className={cx('header-option-icon')} />
-                  <span>compare</span>
+                  <span>So sánh</span>
                 </div>
                 <div className={cx('header-option-item')}>
                   <IoIosHeartEmpty className={cx('header-option-icon')} />
-                  <span>favourite</span>
+                  <span>Yêu thích</span>
                 </div>
                 <div className={cx('header-option-item')}>
                   <BsPerson className={cx('header-option-icon')} />
-                  <span>login</span>
+                  <span>Đăng nhập</span>
                 </div>
                 <div className={cx('header-option-item')}>
                   <BsCart3 className={cx('cart-icon')} />
-                  <p>+0</p>
+                  <p>0</p>
                 </div>
               </div>
             </div>

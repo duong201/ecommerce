@@ -125,7 +125,7 @@
     text-transform: capitalize;
 
     .header-option-item {
-      width: 7.6rem;
+      width: 9.6rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -146,20 +146,25 @@
         font-weight: 300;
       }
 
-      .cart-icon {
-        font-size: 2.8rem;
-      }
+      &:last-child {
+        width: 5.6rem;
+        .cart-icon {
+          font-size: 2.8rem;
+        }
 
-      p {
-        position: absolute;
-        top: 6px;
-        right: 14px;
-        font-size: 1rem;
-        font-weight: 500;
-        color: var(--text-color-2);
-        background-color: #a84448;
-        padding: 0 4px;
-        border-radius: 8px;
+        p {
+          width: 2rem;
+          text-align: center;
+          position: absolute;
+          top: 5px;
+          right: 6px;
+          font-size: 1rem;
+          font-weight: 500;
+          color: var(--text-color-2);
+          background-color: #a84448;
+          padding: 0 4px;
+          border-radius: 8px;
+        }
       }
     }
   }
