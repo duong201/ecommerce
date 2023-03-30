@@ -44,58 +44,38 @@ const Header = () => {
               <div className={cx('header-logo')}>
                 <span>Tipee</span>
               </div>
-              <div className={cx('header-search')}>
-                <input type="text" placeholder="Search here..." />
-                <div className={cx('search-icon')}>
-                  <BsSearch />
-                </div>
+              <div className={cx('header__search')}>
+                <input type="text" className={cx('header__search-input')} placeholder="Nhập để tìm kiếm" />
+                <button className={cx('header__search-btn')}>
+                  <BsSearch className={cx('header__search-btn-icon')} />
+                </button>
               </div>
-              <div className={cx('header-option')}>
-                <div className={cx('header-option-item')}>
-                  <IoIosGitCompare className={cx('header-option-icon')} />
-                  <span>So sánh</span>
-                </div>
-                <div className={cx('header-option-item')}>
-                  <IoIosHeartEmpty className={cx('header-option-icon')} />
-                  <span>Yêu thích</span>
-                </div>
-                <div className={cx('header-option-item')}>
-                  <BsPerson className={cx('header-option-icon')} />
-                  <span>Đăng nhập</span>
-                </div>
-                <div className={cx('header-option-item')}>
-                  <BsCart3 className={cx('cart-icon')} />
-                  <p>0</p>
-                </div>
+              <div className={cx('header-cart')}>
+                <BsCart3 className={cx('cart-icon')} />
+                <p>0</p>
               </div>
             </div>
           </div>
           <div className={cx('header-bottom')}>
             <div className={cx('header-bottom-content')}>
-              <ul>
-                <li>
-                  <div className={cx('categories-title')} href="#">
-                    <BsGrid className={cx('categories-icon')} />
-                    <span>Danh mục</span>
-                    <BsChevronDown className={cx('categories-icon')} />
-                  </div>
-                </li>
-                <li>
-                  <Link className={cx('categories-title')} to="/">
-                    Trang chủ
-                  </Link>
-                </li>
-                <li>
-                  <Link className={cx('categories-title')} to="/products">
-                    Sản phẩm
-                  </Link>
-                </li>
-                <li>
-                  <Link className={cx('categories-title')} to="/contract">
-                    Liện hệ
-                  </Link>
-                </li>
-              </ul>
+              <div className={cx('header-bottom-left')}></div>
+              <div className={cx('header-bottom-center')}>
+                <ul>
+                  <li>
+                    <span>áo polo</span>
+                  </li>
+                  <li>
+                    <span>áo thun nam</span>
+                  </li>
+                  <li>
+                    <span>giày dép nữ</span>
+                  </li>
+                  <li>
+                    <span>phụ kiện nam</span>
+                  </li>
+                </ul>
+              </div>
+              <div className={cx('header-bottom-right')}></div>
             </div>
           </div>
         </div>

@@ -1,14 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800&display=swap');
 
 :root {
+  --primary-color: #1c6758;
+  --second-color: #1f8a70;
+  --white-color: #fff;
+  --background-color: #eef2e6;
+
   --text-color-1: rgb(24, 18, 43, 1);
   --text-color-1-hover: rgb(24, 18, 43, 0.8);
   --text-color-2: rgb(255, 251, 245);
   --text-color-2-hover: rgb(255, 251, 245, 0.8);
-  --header-color: #609966;
-  --header-color-2: #9dc08b;
 
   --max-width: 120rem;
+
+  --primary-box-shadow: 0 0.4rem 1.6rem rgb(43 52 69 / 10%);
 }
 
 * {
@@ -38,11 +43,18 @@ input,
 a[href] {
   color: var(--text-color);
   text-decoration: none;
-  display: inline-block;
 }
 
 ul {
   list-style-type: none;
-  display: flex;
   text-transform: capitalize;
+}
+
+::-webkit-scrollbar {
+  width: 0.8rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
 }
