@@ -6,8 +6,8 @@ import AdminPage from './components/pageAdmin/AdminPage'
 import About from './components/pageMain/about/About'
 import Contract from './components/pageMain/contract/Contract'
 import Home from './components/pageMain/home/Home'
-import Product from './components/pageMain/product/Product'
 import ErrorPages from './pages/ErrorPages'
+import ProductDetail from './components/pageMain/productDetail/ProductDetail'
 
 function App() {
   useEffect(() => {
@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<FirstLayout />}>
             <Route index element={<Home />} />
-            <Route path="products" element={<Product />} />
+            <Route path="product/:id" element={<ProductDetail />} />
             <Route path="about" element={<About />} />
             <Route path="contract" element={<Contract />} />
             <Route path="*" element={<ErrorPages />} />

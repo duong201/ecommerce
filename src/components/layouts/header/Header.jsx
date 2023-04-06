@@ -1,9 +1,8 @@
 import React from 'react'
 import classNames from 'classnames/bind'
 import styles from './Header.module.scss'
+import { BsSearch, BsCart3 } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
-import { BsGrid, BsChevronDown, BsSearch, BsPerson, BsCart3 } from 'react-icons/bs'
-import { IoIosGitCompare, IoIosHeartEmpty } from 'react-icons/io'
 
 const cx = classNames.bind(styles)
 
@@ -42,7 +41,7 @@ const Header = () => {
           <div className={cx('header-center')}>
             <div className={cx('header-center-content')}>
               <div className={cx('header-logo')}>
-                <span>Tipee</span>
+                <Link to="/">Tipee</Link>
               </div>
               <div className={cx('header__search')}>
                 <input type="text" className={cx('header__search-input')} placeholder="Nhập để tìm kiếm" />

@@ -4,6 +4,7 @@
   --primary-color: #1c6758;
   --second-color: #1f8a70;
   --white-color: #fff;
+  --red-color: #ff1e00;
   --background-color: #eef2e6;
 
   --text-color-1: rgb(24, 18, 43, 1);
@@ -13,7 +14,7 @@
 
   --max-width: 120rem;
 
-  --primary-box-shadow: 0 0.4rem 1.6rem rgb(43 52 69 / 10%);
+  --primary-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 * {
@@ -30,7 +31,14 @@ body {
   font-family: 'Montserrat', sans-serif;
   font-size: 1.6rem;
   line-height: 1.5;
+  background-color: var(--background-color);
   text-rendering: optimizeSpeed;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 button,
