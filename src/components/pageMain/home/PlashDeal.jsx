@@ -6,6 +6,7 @@ import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
 
 import classNames from 'classnames/bind'
 import styles from './Home.module.scss'
+import { Link } from 'react-router-dom'
 const cx = classNames.bind(styles)
 
 const NextArrow = (props) => {
@@ -71,19 +72,21 @@ const PlashDeal = () => {
         </div>
         <div className={cx('flasdeal-bottom')}>
           <Slider {...settings}>
-            {products.map((products) => {
+            {products.map((product) => {
               return (
-                <div className={cx('flasdeal-box')} key={products.id}>
+                <div className={cx('flasdeal-box')} key={product.id}>
                   <div className={cx('product')}>
-                    <span className={cx('discount')}>- {products.discount} %</span>
-                    <div className={cx('img')} style={{ backgroundImage: `url(${products.imgPrimary})` }}></div>
+                    <span className={cx('discount')}>- {product.discount} %</span>
+                    <div className={cx('img')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
                     <div className={cx('product-details')}>
-                      <span className={cx('name')}>{products.name}</span>
+                      <Link to={`/product/${product.id}`} className={cx('name')}>
+                        {product.name}
+                      </Link>
                       <div className={cx('price')}>
                         <span className={cx('new-price')}>
-                          {Intl.NumberFormat().format((products.price * (100 - products.discount)) / 100)}
+                          {Intl.NumberFormat().format((product.price * (100 - product.discount)) / 100)}
                         </span>
-                        <span className={cx('old-price')}>{Intl.NumberFormat().format(products.price)}</span>
+                        <span className={cx('old-price')}>{Intl.NumberFormat().format(product.price)}</span>
                       </div>
                     </div>
                   </div>

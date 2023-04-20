@@ -8,7 +8,7 @@ import classNames from 'classnames/bind'
 import styles from './Footer.module.scss'
 const cx = classNames.bind(styles)
 
-const footer = () => {
+const Footer = () => {
   const dataCustomerCare = [
     'Trung tâm trợ giúp',
     'Hướng dẫn mua hàng',
@@ -104,4 +104,4 @@ const footer = () => {
   )
 }
 
-export default footer
+export default Footer

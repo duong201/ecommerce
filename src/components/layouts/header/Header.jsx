@@ -1,12 +1,23 @@
 import React from 'react'
-import classNames from 'classnames/bind'
-import styles from './Header.module.scss'
 import { BsSearch, BsCart3 } from 'react-icons/bs'
+import { IoLogOutOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 
+import classNames from 'classnames/bind'
+import styles from './Header.module.scss'
 const cx = classNames.bind(styles)
 
 const Header = () => {
+  const idUser = sessionStorage.getItem('id')
+  const username = sessionStorage.getItem('name')
+
+  const logout = () => {
+    sessionStorage.removeItem('id')
+    sessionStorage.removeItem('name')
+
+    window.location.reload()
+  }
+
   return (
     <>
       <div className={cx('wrapper')}>
@@ -27,14 +38,39 @@ const Header = () => {
                 </ul>
               </div>
               <div className={cx('header-top-right')}>
-                <ul>
-                  <li>
-                    <a className={cx('title')}>đăng nhập</a>
-                  </li>
-                  <li>
-                    <a className={cx('title')}>đăng ký</a>
-                  </li>
-                </ul>
+                {username ? (
+                  <>
+                    <ul>
+                      <li>
+                        <Link to="/" className={cx('title', 'popupUser')} style={{ textTransform: 'none' }}>
+                          <div className={cx('avtUser')}></div>
+                          {username}
+                          <div className={cx('userOption')}>
+                            <span className={cx('logout')} onClick={logout}>
+                              <IoLogOutOutline />
+                              &nbsp;Đăng xuất
+                            </span>
+                          </div>
+                        </Link>
+                      </li>
+                    </ul>
+                  </>
+                ) : (
+                  <>
+                    <ul>
+                      <li>
+                        <Link to="/home/user/login" className={cx('title')}>
+                          đăng nhập
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/home/user/logout" className={cx('title')}>
+                          đăng ký
+                        </Link>
+                      </li>
+                    </ul>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -50,7 +86,9 @@ const Header = () => {
                 </button>
               </div>
               <div className={cx('header-cart')}>
-                <BsCart3 className={cx('cart-icon')} />
+                <Link to="/home/cart">
+                  <BsCart3 className={cx('cart-icon')} />
+                </Link>
                 <p>0</p>
               </div>
             </div>
@@ -83,4 +121,19 @@ const Header = () => {
   )
 }
 
-export default Header
+const Header2 = () => {
+  return (
+    <div className={cx('header2-wrapper')}>
+      <div className="grid wide">
+        <div className={cx('header2-container')}>
+          <Link to="/" className={cx('header2-logo')}>
+            Tipee
+          </Link>
+          <a to="/">Bạn cần giúp đỡ?</a>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export { Header, Header2 }

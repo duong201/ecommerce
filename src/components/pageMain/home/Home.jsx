@@ -10,6 +10,9 @@ import styles from './Home.module.scss'
 const cx = classNames.bind(styles)
 
 const Home = () => {
+  const idUser = sessionStorage.getItem('id')
+  const username = sessionStorage.getItem('name')
+
   return (
     <>
       <main className={cx('wrapper')}>
