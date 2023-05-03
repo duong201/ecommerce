@@ -11,6 +11,7 @@ const cx = classNames.bind(styles)
 
 const ProductDetail = () => {
   const { id } = useParams()
+  const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
   const [product, setProduct] = useState({})
 
   useEffect(() => {
@@ -20,6 +21,25 @@ const ProductDetail = () => {
     }
     fecthProduct()
   }, [id])
+
+  const addToCart = (product) => {
+    const amount = 1
+    axios
+      .post('http://localhost:8801/add-to-cart', {
+        iduser: DATA_USER_INFO.id,
+        idproduct: product.id,
+        name: product.name,
+        imgPrimary: product.imgPrimary,
+        price: product.price,
+        discount: product.discount,
+        amount: amount,
+      })
+      .then((res) => {
+        if (res.data.status === 'success') {
+          console.log(res.data.message)
+        }
+      })
+  }
 
   return (
     <main>
@@ -84,7 +104,7 @@ const ProductDetail = () => {
                 <div className={cx('clotherSize-item')}>30</div>
               </div>
 
-              <button className={cx('addcart-btn')}>
+              <button className={cx('addcart-btn')} onClick={() => addToCart(product)}>
                 <BsCartPlus className={cx('addcart-icon')} />
                 Thêm vào giỏ hàng
               </button>
@@ -125,7 +145,7 @@ const Comment = ({ id }) => {
     setCommentFile(event.target.files[0])
   }
 
-  console.log({ idProduct: id, commentRate, commentText, commentFile })
+  // console.log({ idProduct: id, commentRate, commentText, commentFile })
 
   return (
     <div className={cx('comment-wrapper')}>

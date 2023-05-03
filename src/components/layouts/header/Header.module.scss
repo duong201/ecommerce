@@ -71,10 +71,39 @@
   position: relative;
   transition: all 0.2s;
 
+  p {
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+  }
+
   &:hover {
     .userOption {
       display: block;
+
+      span {
+        &:first-child {
+          border-top-left-radius: 3px;
+          border-top-right-radius: 3px;
+        }
+        &:last-child {
+          border-bottom-left-radius: 3px;
+          border-bottom-right-radius: 3px;
+        }
+      }
     }
+  }
+
+  ::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    pointer-events: none;
+    z-index: 10;
   }
 
   .avtUser {
@@ -94,18 +123,9 @@
     font-size: 13px;
     font-weight: 500;
     position: absolute;
-    top: 3rem;
-    left: 0;
+    top: 2.9rem;
+    right: 0;
     z-index: 100;
-
-    ::after {
-      content: '';
-      position: absolute;
-      top: -15px;
-      left: 0;
-      width: 100%;
-      height: 20px;
-    }
 
     span {
       width: 100%;
@@ -248,17 +268,22 @@
   }
 }
 
+// ===== HEADER 2 CSS =====
+
 .header2-wrapper {
   width: 100%;
-  height: 11rem;
   background-color: var(--primary-color);
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 
   .header2-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 8rem;
+
     a {
       color: var(--white-color);
       cursor: pointer;
@@ -273,6 +298,114 @@
     .header2-logo {
       font-size: 38px;
       font-weight: 700;
+    }
+  }
+}
+
+// ===== HEADER ADMIN CSS =====
+.header-admin {
+  width: 100%;
+  height: 5.4rem;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  z-index: 100;
+}
+.header-admin-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  min-width: 26rem;
+  height: 100%;
+  border-right: 0.1rem solid #ccc;
+  border-bottom: 0.1rem solid #ccc;
+
+  span {
+    color: var(--primary-color);
+    font-size: 3.6rem;
+    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
+  }
+}
+.navbar-admin {
+  width: 100%;
+  height: 100%;
+  border-bottom: 0.1rem solid #ccc;
+}
+.navbar-admin-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar-admin-search {
+  height: 100%;
+  width: 30rem;
+  border-radius: 0.2rem;
+  background: var(--white-color);
+  box-shadow: var(--primary-box-shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 1.4rem;
+  color: #999;
+
+  input {
+    height: 100%;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.4rem;
+  }
+}
+.navbar-admin-list {
+  list-style-type: none;
+  display: flex;
+
+  .navbar-admin-item {
+    margin-left: 2.8rem;
+
+    .navbar-admin-link {
+      text-align: center;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      transition: 0.2s;
+      position: relative;
+
+      &:hover {
+        color: var(--primary-color);
+        cursor: pointer;
+        transform: translateY(-0.1rem);
+        transition: 0.2s;
+      }
+
+      .navbar-admin-language {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-left: 0.4rem;
+      }
+
+      .navbar-admin-counter {
+        color: var(--white-color);
+        background: var(--red-color);
+        width: 1.6rem;
+        height: 1.6rem;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.6rem;
+        text-align: center;
+        border-radius: 50%;
+        position: absolute;
+        top: -0.6rem;
+        right: -0.6rem;
+      }
     }
   }
 }

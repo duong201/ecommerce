@@ -5,9 +5,11 @@ import { FaMinus, FaPlus } from 'react-icons/fa'
 
 import classNames from 'classnames/bind'
 import styles from './Cart.module.scss'
+import Suggest from '../../layouts/suggest/Suggest'
 const cx = classNames.bind(styles)
 
 const Cart = () => {
+  const idUser = sessionStorage.getItem('id')
   const [dataCart, setDataCart] = useState([])
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const Cart = () => {
               const productAmount = ((item.price * (100 - item.discount)) / 100) * item.amount
               return (
                 <div className={cx('cart-list', 'product')} key={index}>
-                  <div className={cx('row', 'cart-item')} style={{ margin: '0' }}>
+                  <div className={cx('row', 'cart-item')} style={{ margin: '1rem 0' }}>
                     <div className={cx('l-2', 'img')}>
                       <img src={item.imgPrimary} alt="" />
                     </div>

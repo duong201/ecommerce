@@ -36,18 +36,18 @@ const Login = () => {
             if (response.data.status === 'error') {
               alert('tai khoan mat khau khong chinh xac')
             } else if (response.data.status === 'success') {
-              sessionStorage.setItem('id', data.id)
-              sessionStorage.setItem('name', data.username)
-              setAction('/')
+              localStorage.setItem('DATA_USER_INFO', JSON.stringify(data))
+
+              window.location.href = '/'
             }
           }
           if (data.level === 0) {
             if (response.data.status === 'error') {
               alert('tai khoan mat khau khong chinh xac')
             } else if (response.data.status === 'success') {
-              sessionStorage.setItem('idAdmin', data.id)
-              sessionStorage.setItem('adminName', data.username)
-              setAction('/admin')
+              localStorage.setItem('DATA_USER_INFO', JSON.stringify(data))
+
+              window.location.href = '/admin'
             }
           }
         })
@@ -66,7 +66,7 @@ const Login = () => {
             </div>
             <div className={cx('l-6', 'login-left', 'login-box')}>
               {isActive === 'login' ? (
-                <form action="/">
+                <form>
                   <h1>Đăng nhập</h1>
                   <div className={cx('social-container')}>
                     <a href="#" className={cx('social')}>
@@ -94,7 +94,7 @@ const Login = () => {
                 </form>
               ) : (
                 <div>
-                  <form action="/">
+                  <form>
                     <h1>Đăng ký</h1>
                     <div className={cx('social-container')}>
                       <a href="#" className={cx('social')}>
