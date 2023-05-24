@@ -9,14 +9,19 @@ import Suggest from '../../layouts/suggest/Suggest'
 const cx = classNames.bind(styles)
 
 const Cart = () => {
-  const idUser = sessionStorage.getItem('id')
+  const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
   const [dataCart, setDataCart] = useState([])
 
   useEffect(() => {
+    // const fecthCart = async () => {
+    //   const res = await axios.get(`http://localhost:8801/cart/${DATA_USER_INFO.id}`)
+    //   setDataCart(res.data)
+    // }
+    // fecthCart()
     const fecthAllCart = async () => {
       try {
         const res = await axios.get('http://localhost:8801/carts')
-        setDataCart(res.data)
+        setDataCart(res.data.filter((key) => key.iduser === DATA_USER_INFO.id))
       } catch (err) {
         console.log(err)
       }
@@ -89,9 +94,14 @@ const Cart = () => {
               <p>Tổng tiền:</p>
               <span>{Intl.NumberFormat().format(totalPrice)} đ</span>
             </div>
-            <button className={cx('btn')}>Thanh toán</button>
+            <Link to="/home/order" className={cx('btn')}>
+              Thanh toán
+            </Link>
           </div>
         </div>
+      </div>
+      <div className={cx('row')} style={{ margin: '32px 0' }}>
+        <Suggest />
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FaFacebookF, FaGoogle } from 'react-icons/fa'
 import EcommerceLogo from './ecommerceLogo.png'
 
@@ -13,8 +13,12 @@ const Login = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [isActive, setIsActive] = useState(loginOrLogout.user)
+  const [isActive, setIsActive] = useState('')
   const [action, setAction] = useState('')
+
+  useEffect(() => {
+    setIsActive(loginOrLogout.user)
+  }, [loginOrLogout.user])
 
   const handleSubmitUserName = (event) => {
     setUsername(event.target.value)
@@ -66,7 +70,7 @@ const Login = () => {
             </div>
             <div className={cx('l-6', 'login-left', 'login-box')}>
               {isActive === 'login' ? (
-                <form>
+                <form method="GET">
                   <h1>Đăng nhập</h1>
                   <div className={cx('social-container')}>
                     <a href="#" className={cx('social')}>

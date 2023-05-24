@@ -1,0 +1,135 @@
+.order-address,
+.order-product,
+.order-payment {
+  width: 100%;
+  padding: 12px 24px;
+  background-color: var(--white-color);
+  border-radius: 3px;
+  box-shadow: var(--primary-box-shadow);
+}
+.address-title,
+.title-main,
+.payment-mainTitle {
+  width: 100%;
+  height: 3.2rem;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  color: var(--red-color);
+  border-bottom: 1px solid var(--background-color);
+  padding-bottom: 10px;
+
+  .icon {
+    color: var(--red-color);
+    margin-right: 8px;
+  }
+}
+.address-content,
+.product-content {
+  width: 100%;
+  margin-top: 10px !important;
+}
+.address-name {
+  span {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+.address-change {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  button {
+    width: 80%;
+    height: 3rem;
+    border: 1px solid var(--primary-color);
+    background-color: var(--white-color);
+    color: var(--primary-color);
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 3px;
+    transition: all 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+  }
+}
+.product-title,
+.payment-title {
+  width: 100%;
+  border-bottom: 1px solid var(--background-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--grey-color);
+
+  .title-totalMoney {
+    text-align: right;
+    width: 10rem;
+    height: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    padding-bottom: 10px;
+  }
+}
+.title-main,
+.payment-mainTitle {
+  border: none;
+}
+.product-item {
+  display: flex;
+  align-items: center;
+
+  .product-img {
+    width: 6.5rem;
+    height: 6.5rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .product-name {
+    width: 60rem;
+    padding: 0 12px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+  }
+}
+.product-totalMoney {
+  width: 100%;
+  height: 6rem;
+  margin-top: 10px !important;
+  padding-top: 10px;
+  border-top: 1px dashed var(--background-color);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .totalMoney-titleMoney {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--grey-color);
+  }
+
+  .totalMoney-numberMoney {
+    display: inline-flex;
+    padding-left: 12px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--red-color);
+    text-align: right;
+
+    p {
+      font-size: 12px;
+    }
+  }
+}

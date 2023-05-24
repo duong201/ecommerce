@@ -12,6 +12,7 @@ import Login from './components/layouts/login/Login'
 import Products from './components/pageMain/products/Products'
 import Cart from './components/pageMain/cart/Cart'
 import UserInfo from './components/pageMain/userInfo/UserInfo'
+import Order from './components/pageMain/order/Order'
 
 function App() {
   useEffect(() => {
@@ -33,6 +34,7 @@ function App() {
           </Route>
           <Route path="/home" element={<SecondLayout />}>
             <Route path="cart" element={<Cart />} />
+            <Route path="order" element={<Order />} />
             <Route path="user/:user" element={<Login />} />
           </Route>
           <Route path="/admin" element={<AdminLayout />}>
