@@ -190,6 +190,7 @@
     padding: 1.4rem 3rem;
     border: 1px solid var(--primary-color);
     font-size: 1.6rem;
+    font-weight: 500;
     color: var(--primary-color);
     background: var(--background-color);
     display: flex;
@@ -203,10 +204,33 @@
 
     &:hover {
       cursor: pointer;
-      border: 1px solid var(--primary-color);
-      color: var(--white-color);
-      background: var(--primary-color);
+      opacity: 0.9;
     }
+  }
+}
+
+.addToBuy-btn {
+  position: absolute;
+  left: 32rem;
+  bottom: 2rem;
+  padding: 1.4rem 3rem;
+  border: 1px solid var(--primary-color);
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--white-color);
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+
+  .addcart-icon {
+    padding-right: 0.4rem;
+    font-size: 2.6rem;
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.94;
   }
 }
 
@@ -372,7 +396,7 @@
   width: 100%;
   border-top: 1px solid var(--background-color);
 }
-form {
+.boxInput {
   width: 100%;
   height: 8rem;
   display: flex;
@@ -466,5 +490,39 @@ form {
         cursor: pointer;
       }
     }
+  }
+}
+
+// ===== Notification CSS =====
+.notification {
+  display: flex;
+  position: fixed;
+  top: 14rem;
+  right: 1rem;
+  padding: 10px;
+  border-left: 5px solid #79d70f;
+  border-radius: 3px;
+  z-index: 1000;
+  background-color: var(--white-color);
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  color: #79d70f;
+  font-size: 16px;
+  animation: slideInLeft ease 0.3s, fadeOut linear 1s 1s forwards;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% + 32px));
+  }
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
   }
 }
