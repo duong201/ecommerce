@@ -20,8 +20,8 @@ const Cart = () => {
     // fecthCart()
     const fecthAllCart = async () => {
       try {
-        const res = await axios.get('http://localhost:8801/carts')
-        setDataCart(res.data.filter((key) => key.iduser === DATA_USER_INFO.id))
+        const res = await axios.get(`http://localhost:8801/carts/user/${DATA_USER_INFO.id}`)
+        setDataCart(res.data)
       } catch (err) {
         console.log(err)
       }

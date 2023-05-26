@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { BsStarFill, BsStarHalf, BsStar, BsFillFileEarmarkArrowUpFill } from 'react-icons/bs'
-import { v4 as uuidv4 } from 'uuid'
+import React, { useEffect, useState } from 'react'
+import { BsStarFill, BsFillFileEarmarkArrowUpFill } from 'react-icons/bs'
 import axios from 'axios'
 import CommentItem from './CommentItem'
+import { IsRated, RoundToNearestHalf } from './IsRated'
 
 import classNames from 'classnames/bind'
 import styles from './ProductDetail.module.scss'
@@ -12,12 +12,19 @@ const Comment = ({ iduser, idproduct }) => {
   const [commentRate, setCommentRate] = useState('')
   const [commentText, setCommentText] = useState('')
   const [commentFile, setCommentFile] = useState()
-  const idcomment = uuidv4()
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    const fetchComment = async () => {
+      const res = await axios.get(`http://localhost:8801/comment/get/${idproduct}`)
+      setComments(res.data)
+    }
+    fetchComment()
+  }, [idproduct])
 
   const sendComment = async () => {
     await axios
       .post('http://localhost:8801/comment/add', {
-        idcomment: idcomment,
         iduser: iduser,
         idproduct: idproduct,
         rate: commentRate,
@@ -50,22 +57,21 @@ const Comment = ({ iduser, idproduct }) => {
     setCommentFile(event.target.files[0])
   }
 
+  const rateResult =
+    Math.round((comments.reduce((rate, comment) => rate + comment.rate, 0) / comments.length) * 10) / 10
+
   return (
     <div className={cx('comment-content')}>
       <div className={cx('comment-top')}>
         <div className={cx('prevRate', 'row')} style={{ margin: 0 }}>
           <div className={cx('prevRate-left', 'l-3')}>
             <span>
-              <h3>1 Đánh Giá</h3>
-
-              <h3>3.5/5</h3>
+              <h3>{comments.length} Đánh Giá</h3>
             </span>
             <span>
-              <BsStarFill className={cx('prevRate-icon')} />
-              <BsStarFill className={cx('prevRate-icon')} />
-              <BsStarFill className={cx('prevRate-icon')} />
-              <BsStarHalf className={cx('prevRate-icon')} />
-              <BsStar className={cx('prevRate-icon')} />
+              <p>{rateResult}/5</p>
+              &nbsp;
+              <IsRated rating={RoundToNearestHalf(rateResult)} />
             </span>
           </div>
           <div className={cx('prevRate-right', 'l-9')}>
@@ -115,8 +121,10 @@ const Comment = ({ iduser, idproduct }) => {
         </div>
       </div>
       <div className={cx('comment-center')}>
-        {/* {commentItem.length === '0' && <h1>Không có bình luận nào</h1>} */}
-        <CommentItem />
+        {comments.length === 0 && <h1>Không có bình luận nào</h1>}
+        {comments.map((comment) => (
+          <CommentItem key={comment.id} comment={comment} />
+        ))}
       </div>
       <div className={cx('comment-bottom')}>
         <div className={cx('boxInput')}>

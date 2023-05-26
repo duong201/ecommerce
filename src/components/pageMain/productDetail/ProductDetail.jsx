@@ -18,12 +18,22 @@ const ProductDetail = () => {
   const [isVisible, setIsVisible] = useState(false)
   const [infoOrRate, setInfoOrRate] = useState(true)
 
+  const toggleInfoToRate = infoOrRate ? 'active' : null
+  const toggleRateToInfo = infoOrRate ? null : 'active'
+
   useEffect(() => {
     const fecthProduct = async () => {
       const res = await axios.get(`http://localhost:8801/product/${id}`)
       setProduct(res.data)
     }
     fecthProduct()
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    })
+
+    setInfoOrRate(true)
   }, [id])
 
   const addToCart = async (product) => {
@@ -34,23 +44,18 @@ const ProductDetail = () => {
         idproduct: product.id,
         amount: amount,
       })
-      .then(
-        (res) => {
-          if (res.data.status === 'success') {
-            setIsVisible(true)
-            setTimeout(() => {
-              setIsVisible(false)
-            }, 3000)
-          }
-        },
-        (error) => {
-          console.log(error)
-        },
-      )
+      .then((res) => {
+        if (res.data.status === 'success') {
+          setIsVisible(true)
+          setTimeout(() => {
+            setIsVisible(false)
+          }, 3000)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
-
-  const toggleInfoToRate = infoOrRate ? 'active' : null
-  const toggleRateToInfo = infoOrRate ? null : 'active'
 
   return (
     <main>
@@ -71,7 +76,7 @@ const ProductDetail = () => {
                     <span>Thông tin</span>
                   </button>
                 </div>
-                <divs className={cx('cmt-title-item', `${toggleRateToInfo}`)}>
+                <div className={cx('cmt-title-item', `${toggleRateToInfo}`)}>
                   <button
                     onClick={() => {
                       setInfoOrRate(!infoOrRate)
@@ -79,7 +84,7 @@ const ProductDetail = () => {
                   >
                     <span>Đánh giá</span>
                   </button>
-                </divs>
+                </div>
               </div>
               {infoOrRate ? <InfoProduct /> : <Comment iduser={DATA_USER_INFO.id} idproduct={id} />}
             </div>
