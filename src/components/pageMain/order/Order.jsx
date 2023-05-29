@@ -11,6 +11,21 @@ const cx = classNames.bind(styles)
 const Order = () => {
   const [product, setProduct] = useState({})
 
+  const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
+  const [dataCart, setDataCart] = useState([])
+
+  useEffect(() => {
+    const fecthAllCart = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8801/carts/user/${DATA_USER_INFO.id}`)
+        setDataCart(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthAllCart()
+  }, [])
+
   useEffect(() => {
     const fecthProduct = async () => {
       const res = await axios.get(`http://localhost:8801/product/${2}`)
@@ -33,8 +48,8 @@ const Order = () => {
           </div>
           <div className={cx('address-address', 'l-8')}>
             <span>
-              Trường Đại Học Công Nghệ Thông Tin Và Truyền Thông Việt Hàn, 470 Trần Đại Nghĩa, Phường Hòa Hải, Quận Ngũ
-              Hành Sơn, Đà Nẵng
+              Trường Đại Học Công Nghệ Thông Tin Và Truyền Thông Việt Hàn, 470 Trần Đại Nghĩa,
+              Phường Hòa Hải, Quận Ngũ Hành Sơn, Đà Nẵng
             </span>
           </div>
           <div className={cx('address-change', 'l-2')}>
@@ -44,16 +59,21 @@ const Order = () => {
       </div>
 
       <div className={cx('row', 'order-product')} style={{ margin: '0 0 16px 0' }}>
-        <div className={cx('product-title')}>
-          <h2 className={cx('title-main')}>
+        <div className={cx('row', 'product-title')}>
+          <h2 className={cx('l-6', 'title-main')}>
             <BsCartCheck className={cx('icon')} />
             Sản phẩm
           </h2>
-          <span className={cx('title-totalMoney')}>Thành tiền</span>
+          <span className={cx('l-2', 'title-totalMoney')}>Thành tiền</span>
+          <span className={cx('l-2', 'title-totalMoney')}>Thành tiền</span>
+          <span className={cx('l-2', 'title-totalMoney')}>Thành tiền</span>
         </div>
         <div className={cx('row', 'product-content')} style={{ margin: 0 }}>
           <div className={cx('product-item')}>
-            <div className={cx('product-img')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
+            <div
+              className={cx('product-img')}
+              style={{ backgroundImage: `url(${product.imgPrimary})` }}
+            ></div>
             <span className={cx('product-name')}>{product.name}</span>
             <span className={cx('product-type')}></span>
           </div>
