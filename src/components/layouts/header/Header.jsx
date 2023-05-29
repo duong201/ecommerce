@@ -1,8 +1,9 @@
 import React from 'react'
-import { BsSearch, BsCart3, BsPersonLinesFill, BsGlobe, BsMoon, BsChatLeft, BsListUl, BsGear } from 'react-icons/bs'
+import { BsSearch, BsPersonLinesFill, BsGlobe, BsMoon, BsChatLeft, BsListUl, BsGear } from 'react-icons/bs'
 import { IoLogOutOutline } from 'react-icons/io5'
 import { FaCompress, FaRegBell, FaUser } from 'react-icons/fa'
-import { Link, redirect, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import HeaderCart from './HeaderCart'
 
 import classNames from 'classnames/bind'
 import styles from './Header.module.scss'
@@ -101,12 +102,7 @@ const Header = () => {
                   <BsSearch className={cx('header__search-btn-icon')} />
                 </button>
               </div>
-              <div className={cx('header-cart')}>
-                <Link to="/home/cart">
-                  <BsCart3 className={cx('cart-icon')} />
-                </Link>
-                <p>0</p>
-              </div>
+              <HeaderCart iduser={DATA_USER_INFO.id} />
             </div>
           </div>
           <div className={cx('header-bottom')}>
