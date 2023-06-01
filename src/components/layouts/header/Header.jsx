@@ -1,5 +1,13 @@
 import React from 'react'
-import { BsSearch, BsPersonLinesFill, BsGlobe, BsMoon, BsChatLeft, BsListUl, BsGear } from 'react-icons/bs'
+import {
+  BsSearch,
+  BsPersonLinesFill,
+  BsGlobe,
+  BsMoon,
+  BsChatLeft,
+  BsListUl,
+  BsGear,
+} from 'react-icons/bs'
 import { IoLogOutOutline } from 'react-icons/io5'
 import { FaCompress, FaRegBell, FaUser } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom'
@@ -97,12 +105,16 @@ const Header = () => {
                 <Link to="/">Tipee</Link>
               </div>
               <div className={cx('header__search')}>
-                <input type="text" className={cx('header__search-input')} placeholder="Nhập để tìm kiếm" />
+                <input
+                  type="text"
+                  className={cx('header__search-input')}
+                  placeholder="Nhập để tìm kiếm"
+                />
                 <button className={cx('header__search-btn')}>
                   <BsSearch className={cx('header__search-btn-icon')} />
                 </button>
               </div>
-              <HeaderCart iduser={DATA_USER_INFO.id} />
+              {DATA_USER_INFO ? <HeaderCart iduser={DATA_USER_INFO.id} /> : <HeaderCart />}
             </div>
           </div>
           <div className={cx('header-bottom')}>

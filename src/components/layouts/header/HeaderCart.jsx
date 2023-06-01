@@ -27,7 +27,7 @@ const HeaderCart = ({ iduser }) => {
       <Link to="/home/cart">
         <BsCart3 className={cx('cart-icon')} />
       </Link>
-      <p>{dataCart.length}</p>
+      <p>{iduser && dataCart.length}</p>
     </div>
   )
 }

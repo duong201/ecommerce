@@ -13,6 +13,9 @@ import Products from './components/pageMain/products/Products'
 import Cart from './components/pageMain/cart/Cart'
 import UserInfo from './components/pageMain/userInfo/UserInfo'
 import Order from './components/pageMain/order/Order'
+import UsersAdmin from './components/pageAdmin/usersAdmin/UsersAdmin'
+import ProductsAdmin from './components/pageAdmin/productsAdmin/ProductsAdmin'
+import AddProducts from './components/pageAdmin/productsAdmin/AddProducts'
 
 function App() {
   useEffect(() => {
@@ -39,6 +42,9 @@ function App() {
           </Route>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<AdminPage />} />
+            <Route path="users" element={<UsersAdmin />} />
+            <Route path="products" element={<ProductsAdmin />} />
+            <Route path="products/add" element={<AddProducts />} />
           </Route>
         </Routes>
       </BrowserRouter>

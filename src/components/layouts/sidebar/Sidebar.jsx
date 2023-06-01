@@ -6,6 +6,7 @@ import { BiLogOut } from 'react-icons/bi'
 
 import classNames from 'classnames/bind'
 import styles from './Sidebar.module.scss'
+import { BsFillPersonLinesFill } from 'react-icons/bs'
 const cx = classNames.bind(styles)
 
 const Sidebar = () => {
@@ -26,13 +27,13 @@ const SidebarAdmin = () => {
           </li>
           <li className={cx('sidebar-admin-item')}>Danh sách</li>
           <li className={cx('sidebar-admin-item')}>
-            <Link to="/admin/list-user" className={cx('sidebar-admin-link')}>
-              {/* <PersonOutlineOutlinedIcon className={cx("sidebar-admin-icon" /> */}
+            <Link to="/admin/users" className={cx('sidebar-admin-link')}>
+              <BsFillPersonLinesFill className={cx('sidebar-admin-icon')} />
               Người dùng
             </Link>
           </li>
           <li className={cx('sidebar-admin-item')}>
-            <Link to="/admin/list-product" className={cx('sidebar-admin-link')}>
+            <Link to="/admin/products" className={cx('sidebar-admin-link')}>
               <FaStoreAlt className={cx('sidebar-admin-icon')} />
               Sản phẩm
             </Link>
@@ -66,8 +67,10 @@ const SidebarAdmin = () => {
 
           <li className={cx('sidebar-admin-item')}>
             <div className={cx('sidebar-admin-link')}>
-              <BiLogOut className={cx('sidebar-admin-icon')} />
-              Đăng xuất
+              <Link to="/home/user/login" className={cx('sidebar-admin-link')}>
+                <BiLogOut className={cx('sidebar-admin-icon')} />
+                Đăng xuất
+              </Link>
             </div>
           </li>
         </ul>
