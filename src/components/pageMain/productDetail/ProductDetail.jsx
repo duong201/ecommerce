@@ -12,7 +12,7 @@ const cx = classNames.bind(styles)
 
 const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
 
-const ProductDetail = () => {
+const ProductDetail = ({ handleChangeCartLength }) => {
   const { id } = useParams()
   const [product, setProduct] = useState({})
   const [isVisible, setIsVisible] = useState(false)
@@ -50,6 +50,7 @@ const ProductDetail = () => {
           setTimeout(() => {
             setIsVisible(false)
           }, 3000)
+          handleChangeCartLength(1)
         }
       })
       .catch((error) => {

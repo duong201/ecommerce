@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
+import axios from 'axios'
 
 import classNames from 'classnames/bind'
 import style from './ProductsAdmin.module.scss'
@@ -17,6 +18,22 @@ const AddProducts = () => {
   const [image, setImage] = useState(null)
   const [selectedCheckboxSize, setSelectedCheckboxSize] = useState([])
   const [selectedCheckboxColor, setSelectedCheckboxColor] = useState([])
+  const [categories, setCategories] = useState([])
+  const [selectedIdCategory, setSelectedIdCategory] = useState(1)
+  const [sizeDetail, setSizeDetail] = useState([])
+  const [colorDetail, setColorDetail] = useState([])
+
+  useEffect(() => {
+    const fecthAllCategories = async () => {
+      try {
+        const res = await axios.get('http://localhost:8801/categorize')
+        setCategories(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthAllCategories()
+  }, [])
 
   function handleCheckboxSize(e) {
     const checkboxId = e.target.id
@@ -47,7 +64,35 @@ const AddProducts = () => {
   const handleAddProductData = (event) => {
     const { name, value } = event.target
     setAddProductsData({ ...addProductsData, [name]: value })
+
+    name === 'addProductCategory' && setSelectedIdCategory(event.target.value)
   }
+
+  useEffect(() => {
+    const fecthAllSize = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8801/sizedetail/${selectedIdCategory}`)
+        setSizeDetail(Object.values(res.data[0]).filter((val) => val !== null && val !== undefined))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthAllSize()
+  }, [selectedIdCategory])
+
+  useEffect(() => {
+    const fecthAllcolor = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8801/colordetail/${selectedIdCategory}`)
+        setColorDetail(
+          Object.values(res.data[0]).filter((val) => val !== null && val !== undefined),
+        )
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthAllcolor()
+  }, [selectedIdCategory])
 
   return (
     <div className={cx('addProducts-wrapper')} style={{ margin: '0' }}>
@@ -56,8 +101,8 @@ const AddProducts = () => {
           <h1>Thêm sản phẩm</h1>
         </div>
       </div>
-      <div className={cx('row')} style={{ margin: '0' }}>
-        <section className="l-5">
+      <div className={cx('row')} style={{ margin: '0', padding: '0 32px', position: 'relative' }}>
+        <section className="l-7">
           <div className={cx('addProducts-name')}>
             <label>Tên sản phẩm</label>
             <input
@@ -72,7 +117,7 @@ const AddProducts = () => {
             <div className={cx('l-4', 'addProducts-price')}>
               <label>Giá</label>
               <input
-                type="text"
+                type="number"
                 name="addProductPrice"
                 placeholder="Nhập giá sản phẩm"
                 value={addProductsData.addProductPrice}
@@ -82,14 +127,18 @@ const AddProducts = () => {
             <div className={cx('l-8', 'addProducts-category')}>
               <label>Loại hàng</label>
               <select
-                id="country"
+                id="category"
                 name="addProductCategory"
                 value={addProductsData.addProductCategory}
                 onChange={handleAddProductData}
               >
-                <option value="vn">Chọn Loại hàng</option>
-                <option value="1">Thời trang nam</option>
-                <option value="2">Thời trang nữ</option>
+                {categories.map((category) => {
+                  return (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  )
+                })}
               </select>
             </div>
           </div>
@@ -141,7 +190,7 @@ const AddProducts = () => {
             ></textarea>
           </div>
         </section>
-        <section className="l-7" style={{ paddingLeft: '32px' }}>
+        <section className="l-5" style={{ paddingLeft: '16px' }}>
           <div className={cx('addProducts-img')}>
             <label>Hình ảnh</label>
             <div className={cx('image-upload')}>
@@ -240,7 +289,7 @@ const AddProducts = () => {
           </div>
           <div className="row" style={{ margin: '0', marginTop: '24px' }}>
             <div className={cx('l-6', 'addProducts-size')}>
-              <label>Giá</label>
+              <label>Size</label>
               <div className={cx('size-container')}>
                 <div className={cx('box-option')}>
                   {selectedCheckboxSize.map((checkboxId) => (
@@ -248,18 +297,16 @@ const AddProducts = () => {
                   ))}
                 </div>
                 <div className={cx('ontions')}>
-                  <input type="checkbox" id="checkboxSize1" onChange={handleCheckboxSize} />
-                  <label htmlFor="checkboxSize1">Checkbox 1</label>
-                  <input type="checkbox" id="checkboxSize2" onChange={handleCheckboxSize} />
-                  <label htmlFor="checkboxSize2">Checkbox 2</label>
-                  <input type="checkbox" id="checkboxSize3" onChange={handleCheckboxSize} />
-                  <label htmlFor="checkboxSize3">Checkbox 3</label>
-                  <input type="checkbox" id="checkboxSize4" onChange={handleCheckboxSize} />
-                  <label htmlFor="checkboxSize4">Checkbox 4</label>
-                  <input type="checkbox" id="checkboxSize5" onChange={handleCheckboxSize} />
-                  <label htmlFor="checkboxSize5">Checkbox 5</label>
-                  <input type="checkbox" id="checkboxSize6" onChange={handleCheckboxSize} />
-                  <label htmlFor="checkboxSize6">Checkbox 6</label>
+                  {sizeDetail.length === 0 && <p>Chọn loại hàng!!</p>}
+                  {sizeDetail &&
+                    sizeDetail.map((size, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <input type="checkbox" id={size} onChange={handleCheckboxSize} />
+                          <label htmlFor={size}>{size}</label>
+                        </Fragment>
+                      )
+                    })}
                 </div>
               </div>
             </div>
@@ -272,18 +319,16 @@ const AddProducts = () => {
                   ))}
                 </div>
                 <div className={cx('ontions')}>
-                  <input type="checkbox" id="checkboxColor1" onChange={handleCheckboxColor} />
-                  <label htmlFor="checkboxColor1">Checkbox 1</label>
-                  <input type="checkbox" id="checkboxColor2" onChange={handleCheckboxColor} />
-                  <label htmlFor="checkboxColor2">Checkbox 2</label>
-                  <input type="checkbox" id="checkboxColor3" onChange={handleCheckboxColor} />
-                  <label htmlFor="checkboxColor3">Checkbox 3</label>
-                  <input type="checkbox" id="checkboxColor4" onChange={handleCheckboxColor} />
-                  <label htmlFor="checkboxColor4">Checkbox 4</label>
-                  <input type="checkbox" id="checkboxColor5" onChange={handleCheckboxColor} />
-                  <label htmlFor="checkboxColor5">Checkbox 5</label>
-                  <input type="checkbox" id="checkboxColor6" onChange={handleCheckboxColor} />
-                  <label htmlFor="checkboxColor6">Checkbox 6</label>
+                  {colorDetail.length === 0 && <p>Chọn loại hàng!!</p>}
+                  {colorDetail &&
+                    colorDetail.map((size, index) => {
+                      return (
+                        <Fragment key={index}>
+                          <input type="checkbox" id={size} onChange={handleCheckboxSize} />
+                          <label htmlFor={size}>{size}</label>
+                        </Fragment>
+                      )
+                    })}
                 </div>
               </div>
             </div>
@@ -291,7 +336,7 @@ const AddProducts = () => {
         </section>
       </div>
       <div className={cx('row', 'box-button')} style={{ margin: '0' }}>
-        <button className={cx('btn-add')}>Add Product</button>
+        <button className={cx('btn-add', 'active')}>Add Product</button>
         <button className={cx('btn-save')}>Save Product</button>
       </div>
     </div>

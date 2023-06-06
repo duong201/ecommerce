@@ -15,6 +15,7 @@ import HeaderCart from './HeaderCart'
 
 import classNames from 'classnames/bind'
 import styles from './Header.module.scss'
+import Search from './Search'
 const cx = classNames.bind(styles)
 
 const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
@@ -93,7 +94,7 @@ const Navbar = () => {
   )
 }
 
-const Header = () => {
+const Header = ({ changeCartLength }) => {
   return (
     <>
       <div className={cx('wrapper')}>
@@ -104,17 +105,12 @@ const Header = () => {
               <div className={cx('header-logo')}>
                 <Link to="/">Tipee</Link>
               </div>
-              <div className={cx('header__search')}>
-                <input
-                  type="text"
-                  className={cx('header__search-input')}
-                  placeholder="Nhập để tìm kiếm"
-                />
-                <button className={cx('header__search-btn')}>
-                  <BsSearch className={cx('header__search-btn-icon')} />
-                </button>
-              </div>
-              {DATA_USER_INFO ? <HeaderCart iduser={DATA_USER_INFO.id} /> : <HeaderCart />}
+              <Search />
+              {DATA_USER_INFO ? (
+                <HeaderCart iduser={DATA_USER_INFO.id} changeCartLength={changeCartLength} />
+              ) : (
+                <HeaderCart />
+              )}
             </div>
           </div>
           <div className={cx('header-bottom')}>

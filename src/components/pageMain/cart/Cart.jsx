@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Suggest from '../../layouts/suggest/Suggest'
 
@@ -12,6 +12,7 @@ const Cart = () => {
   const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
   const [dataCart, setDataCart] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
+  const [changeAmount, setChangeAmount] = useState(0)
 
   useEffect(() => {
     const fecthAllCart = async () => {
@@ -23,7 +24,11 @@ const Cart = () => {
       }
     }
     fecthAllCart()
-  }, [])
+  }, [changeAmount])
+
+  const handleChangeAmount = (data) => {
+    setChangeAmount(changeAmount + data)
+  }
 
   const handleCartsChange = (data) => {
     const newCart = dataCart.filter((key) => key.id !== data.id)
@@ -56,6 +61,7 @@ const Cart = () => {
                     key={index}
                     iduser={DATA_USER_INFO.id}
                     handleCartsChange={handleCartsChange}
+                    handleChangeAmount={handleChangeAmount}
                   />
                 )
               })}

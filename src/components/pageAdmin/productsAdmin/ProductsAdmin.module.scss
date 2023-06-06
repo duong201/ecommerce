@@ -210,6 +210,7 @@ table {
   flex-direction: column;
   transition: all 0.2s linear;
   margin-bottom: 20px;
+  padding-right: 8px;
 
   input,
   select,
@@ -335,6 +336,7 @@ label {
     text-align: center;
     text-transform: capitalize;
     color: var(--white-color);
+    min-width: 5rem;
     padding: 6px;
     background-color: var(--primary-color);
     border-radius: 3px;
@@ -348,6 +350,7 @@ label {
 
 .ontions {
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
 
   label {
@@ -361,11 +364,13 @@ label {
   input[type='checkbox'] + label {
     display: flex;
     justify-content: center;
+    min-width: 5rem;
     padding: 6px;
     background-color: var(--white-color);
     border: 1px solid var(--primary-color);
     border-radius: 3px;
-    margin-right: 12px;
+    margin-left: 6px;
+    margin-right: 6px;
     cursor: pointer;
   }
 
@@ -376,7 +381,28 @@ label {
 }
 
 .box-button {
-  position: fixed;
-  right: 2rem;
-  bottom: 2rem;
+  position: absolute;
+  right: 3.2rem;
+  bottom: 3.2rem;
+
+  button {
+    margin-right: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--white-color);
+    color: var(--primary-color);
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &.active {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+    }
+  }
 }

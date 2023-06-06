@@ -7,7 +7,7 @@ import classNames from 'classnames/bind'
 import styles from './Cart.module.scss'
 const cx = classNames.bind(styles)
 
-const CartItem = ({ item, iduser, handleCartsChange }) => {
+const CartItem = ({ item, iduser, handleCartsChange, handleChangeAmount }) => {
   const [amount, setAmount] = useState(item.amount)
   const [isChecked, setIsChecked] = useState(false)
 
@@ -21,6 +21,7 @@ const CartItem = ({ item, iduser, handleCartsChange }) => {
       .then((res) => {
         if (res.data.status === 'update-success') {
           setAmount(amount - 1)
+          handleChangeAmount(1)
         } else if (res.data.status === 'delete-success') {
           handleCartsChange(item)
         } else {
@@ -39,6 +40,7 @@ const CartItem = ({ item, iduser, handleCartsChange }) => {
       .then((res) => {
         if (res.data.status === 'success') {
           setAmount(amount + 1)
+          handleChangeAmount(1)
         } else {
           console.log('Chỉnh sửa giỏ hàng không thành công!')
         }

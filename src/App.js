@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './grid.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AdminLayout, FirstLayout, SecondLayout } from './components/layouts/layout/Layout'
@@ -16,23 +16,34 @@ import Order from './components/pageMain/order/Order'
 import UsersAdmin from './components/pageAdmin/usersAdmin/UsersAdmin'
 import ProductsAdmin from './components/pageAdmin/productsAdmin/ProductsAdmin'
 import AddProducts from './components/pageAdmin/productsAdmin/AddProducts'
+import PageSearch from './components/pageMain/pageSearch/PageSearch'
 
 function App() {
   useEffect(() => {
     document.title = 'Tipee'
   }, [])
 
+  const [changeCartLength, setChangeCartLength] = useState(0)
+
+  const handleChangeCartLength = (data) => {
+    setChangeCartLength(changeCartLength + data)
+  }
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<FirstLayout />}>
+          <Route path="/" element={<FirstLayout changeCartLength={changeCartLength} />}>
             <Route index element={<Home />} />
-            <Route path="product/:id" element={<ProductDetail />} />
+            <Route
+              path="product/:id"
+              element={<ProductDetail handleChangeCartLength={handleChangeCartLength} />}
+            />
             <Route path="products" element={<Products />} />
             <Route path="about" element={<About />} />
             <Route path="user-info" element={<UserInfo />} />
             <Route path="contract" element={<Contract />} />
+            <Route path="search/:inputSearch" element={<PageSearch />} />
             <Route path="*" element={<ErrorPages />} />
           </Route>
           <Route path="/home" element={<SecondLayout />}>

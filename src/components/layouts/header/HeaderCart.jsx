@@ -7,7 +7,7 @@ import classNames from 'classnames/bind'
 import styles from './Header.module.scss'
 const cx = classNames.bind(styles)
 
-const HeaderCart = ({ iduser }) => {
+const HeaderCart = ({ iduser, changeCartLength }) => {
   const [dataCart, setDataCart] = useState([])
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const HeaderCart = ({ iduser }) => {
       }
     }
     fecthAllCart()
-  }, [])
+  }, [changeCartLength])
 
   return (
     <div className={cx('header-cart')}>

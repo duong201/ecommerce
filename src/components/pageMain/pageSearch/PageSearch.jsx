@@ -1,32 +1,19 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { FaListUl, FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 import classNames from 'classnames/bind'
-import styles from './Products.module.scss'
+import styles from './PageSearch.module.scss'
 const cx = classNames.bind(styles)
 
-const Products = () => {
+const PageSearch = () => {
+  const { inputSearch } = useParams()
   const [products, setProducts] = useState([])
   const [filter, setFilter] = useState(products)
-  let componentMounted = true
-
   const [categorize, setCategorize] = useState([])
 
   useEffect(() => {
-    const fecthAllProducts = async () => {
-      const res = await axios.get('http://localhost:8801/products')
-      if (componentMounted) {
-        setProducts(res.data)
-        setFilter(res.data)
-      }
-      return () => {
-        componentMounted = false
-      }
-    }
-    fecthAllProducts()
-
     const fecthAllCategorize = async () => {
       try {
         const res = await axios.get('http://localhost:8801/categorize')
@@ -37,6 +24,22 @@ const Products = () => {
     }
     fecthAllCategorize()
   }, [])
+
+  useEffect(() => {
+    const fecthSendSearch = async () => {
+      try {
+        await axios
+          .post(`http://localhost:8801/search`, {
+            inputSearch: inputSearch,
+          })
+          .then((res) => setProducts(res))
+          .catch((error) => console.error(error))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthSendSearch()
+  }, [inputSearch])
 
   const filterProducts = (cate) => {
     const updateList = products.filter((x) => x.idcategorize === cate)
@@ -137,4 +140,4 @@ const ListProducts = ({ filter }) => {
   )
 }
 
-export default Products
+export default PageSearch

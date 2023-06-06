@@ -4,10 +4,10 @@ import Footer from '../footer/Footer'
 import { Header, Header2, HeaderAdmin } from '../header/Header'
 import { SidebarAdmin } from '../sidebar/Sidebar'
 
-const FirstLayout = () => {
+const FirstLayout = ({ changeCartLength }) => {
   return (
     <>
-      <Header />
+      <Header changeCartLength={changeCartLength} />
       <Outlet />
       <Footer />
     </>

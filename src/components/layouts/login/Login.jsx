@@ -70,7 +70,7 @@ const Login = () => {
             </div>
             <div className={cx('l-6', 'login-left', 'login-box')}>
               {isActive === 'login' ? (
-                <form method="GET">
+                <form>
                   <h1>Đăng nhập</h1>
                   <div className={cx('social-container')}>
                     <a href="#" className={cx('social')}>
@@ -81,7 +81,11 @@ const Login = () => {
                     </a>
                   </div>
                   <span>Hoặc sử dụng tài khoản của bạn</span>
-                  <input type="username" placeholder="Tên đăng nhập" onChange={handleSubmitUserName} />
+                  <input
+                    type="username"
+                    placeholder="Tên đăng nhập"
+                    onChange={handleSubmitUserName}
+                  />
                   <input type="password" placeholder="Mật khẩu" onChange={handleSubmitPassword} />
                   <a href="#">Quên mật khẩu?</a>
                   <button onClick={login}>Đăng nhập</button>
