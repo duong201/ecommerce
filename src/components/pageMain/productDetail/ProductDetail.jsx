@@ -43,13 +43,14 @@ const ProductDetail = ({ handleChangeCartLength }) => {
         iduser: DATA_USER_INFO.id,
         idproduct: product.id,
         amount: amount,
+        checked: 0,
       })
       .then((res) => {
         if (res.data.status === 'success') {
           setIsVisible(true)
           setTimeout(() => {
             setIsVisible(false)
-          }, 3000)
+          }, 4000)
           handleChangeCartLength(1)
         }
       })

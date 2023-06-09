@@ -69,7 +69,7 @@ const ProductsAdmin = () => {
                         <span>{product.name}</span>
                       </td>
                       <td className={cx('price')}>{Intl.NumberFormat().format(product.price)}</td>
-                      <td className={cx('discount')}>{product.discount}</td>
+                      <td className={cx('discount')}>{product.discount} %</td>
                       <td className={cx('amount')}>{product.amount}</td>
                       <td className={cx('sold')}>{product.sold}</td>
                       <td className={cx('status')}>{product.status}</td>

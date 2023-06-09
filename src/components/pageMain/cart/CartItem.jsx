@@ -9,7 +9,7 @@ const cx = classNames.bind(styles)
 
 const CartItem = ({ item, iduser, handleCartsChange, handleChangeAmount }) => {
   const [amount, setAmount] = useState(item.amount)
-  const [isChecked, setIsChecked] = useState(false)
+  const [isChecked, setChecked] = useState(item.checked === 1 ? true : false)
 
   const minusAmount = async () => {
     await axios
@@ -56,8 +56,34 @@ const CartItem = ({ item, iduser, handleCartsChange, handleChangeAmount }) => {
     })
   }
 
-  const handleChecked = () => {
-    setIsChecked(!isChecked)
+  const handleChecked = async () => {
+    setChecked(!isChecked)
+    handleChangeAmount(1)
+    isChecked
+      ? await axios
+          .post('http://localhost:8801/cart/checked', {
+            idCart: item.id,
+            checked: 0,
+          })
+          .then((res) => {
+            if (res.data.status === 'success') {
+              console.log(res.data.status)
+              handleChangeAmount(1)
+            }
+          })
+          .catch((err) => console.log(err))
+      : await axios
+          .post('http://localhost:8801/cart/checked', {
+            idCart: item.id,
+            checked: 1,
+          })
+          .then((res) => {
+            if (res.data.status === 'success') {
+              console.log(res.data.status)
+              handleChangeAmount(1)
+            }
+          })
+          .catch((err) => console.log(err))
   }
 
   const productPriceTotal = ((item.price * (100 - item.discount)) / 100) * amount

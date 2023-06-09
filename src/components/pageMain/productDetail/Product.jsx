@@ -1,22 +1,68 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsStarFill, BsStarHalf, BsStar, BsCartPlus } from 'react-icons/bs'
 import { FaMoneyCheck } from 'react-icons/fa'
 
 import classNames from 'classnames/bind'
 import styles from './ProductDetail.module.scss'
+import axios from 'axios'
 const cx = classNames.bind(styles)
 
 const Product = ({ product, addToCart }) => {
+  const [idcate, setIdCate] = useState(product.idcategorize)
+  const [size, setSize] = useState([])
+  const [color, setColor] = useState([])
+
+  useEffect(() => {
+    const fecthSize = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8801/sizedetail/${product.idcategorize}`)
+        setSize(Object.values(res.data[0]).filter((val) => val !== null && val !== undefined))
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthSize()
+
+    const fecthColor = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8801/colordetail/${product.idcategorize}`)
+        // setColor(Object.values(res.data[0]).filter((val) => val !== null && val !== undefined))
+        setColor(res.data[0])
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthColor()
+  }, [idcate])
+
   return (
     <div className="row" style={{ margin: '0' }}>
       <div className="l-5">
-        <div className={cx('img-main')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
+        <div
+          className={cx('img-main')}
+          style={{ backgroundImage: `url(${product.imgPrimary})` }}
+        ></div>
         <div className={cx('img-list')}>
-          <div className={cx('l-2', 'img-item')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
-          <div className={cx('l-2', 'img-item')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
-          <div className={cx('l-2', 'img-item')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
-          <div className={cx('l-2', 'img-item')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
-          <div className={cx('l-2', 'img-item')} style={{ backgroundImage: `url(${product.imgPrimary})` }}></div>
+          <div
+            className={cx('l-2', 'img-item')}
+            style={{ backgroundImage: `url(${product.imgPrimary})` }}
+          ></div>
+          <div
+            className={cx('l-2', 'img-item')}
+            style={{ backgroundImage: `url(${product.imgPrimary})` }}
+          ></div>
+          <div
+            className={cx('l-2', 'img-item')}
+            style={{ backgroundImage: `url(${product.imgPrimary})` }}
+          ></div>
+          <div
+            className={cx('l-2', 'img-item')}
+            style={{ backgroundImage: `url(${product.imgPrimary})` }}
+          ></div>
+          <div
+            className={cx('l-2', 'img-item')}
+            style={{ backgroundImage: `url(${product.imgPrimary})` }}
+          ></div>
         </div>
       </div>
 
@@ -55,16 +101,20 @@ const Product = ({ product, addToCart }) => {
 
         <div className={cx('clotherColor')}>
           <div className={cx('clotherColor-item')}>Màu:</div>
-          <div className={cx('clotherColor-item')}>Đen</div>
-          <div className={cx('clotherColor-item')}>Trắng</div>
-          <div className={cx('clotherColor-item')}>Xám</div>
+          {color.map((item, index) => (
+            <div className={cx('clotherColor-item')} key={index}>
+              {item}
+            </div>
+          ))}
         </div>
 
         <div className={cx('clotherSize')}>
           <div className={cx('clotherSize-item')}>Size:</div>
-          <div className={cx('clotherSize-item')}>28</div>
-          <div className={cx('clotherSize-item')}>29</div>
-          <div className={cx('clotherSize-item')}>30</div>
+          {size.map((item, index) => (
+            <div className={cx('clotherSize-item')} key={index}>
+              {item}
+            </div>
+          ))}
         </div>
 
         <button className={cx('addcart-btn')} onClick={() => addToCart(product)}>

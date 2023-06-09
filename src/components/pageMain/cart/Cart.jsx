@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Suggest from '../../layouts/suggest/Suggest'
 
@@ -36,10 +36,12 @@ const Cart = () => {
   }
 
   useEffect(() => {
-    const resultTotalPrice = dataCart.reduce(
-      (price, item) => price + item.amount * ((item.price * (100 - item.discount)) / 100),
-      0,
-    )
+    const resultTotalPrice = dataCart
+      .filter((key) => key.checked === 1)
+      .reduce(
+        (price, item) => price + item.amount * ((item.price * (100 - item.discount)) / 100),
+        0,
+      )
 
     setTotalPrice(resultTotalPrice)
   }, [dataCart])

@@ -133,12 +133,15 @@
     margin-top: 2.8rem;
 
     .clotherColor-item {
+      min-width: 6rem;
       color: var(--text-color);
       font-size: 1.4rem;
       border: 0.1rem solid #eee;
       padding: 0.5rem 1rem;
       border-radius: 0.4rem;
       margin-right: 1rem;
+      text-transform: capitalize;
+      text-align: center;
 
       &:hover {
         color: var(--white-color);
@@ -151,6 +154,7 @@
         border: none;
         width: 6rem;
         pointer-events: none;
+        text-align: left;
       }
     }
   }
@@ -161,12 +165,14 @@
     margin-top: 2.8rem;
 
     .clotherSize-item {
+      min-width: 4rem;
       color: var(--text-color);
       font-size: 1.4rem;
       border: 0.1rem solid #eee;
       padding: 0.5rem 1rem;
       border-radius: 0.4rem;
       margin-right: 1rem;
+      text-align: center;
 
       &:hover {
         color: var(--white-color);
@@ -179,6 +185,7 @@
         border: none;
         width: 6rem;
         pointer-events: none;
+        text-align: left;
       }
     }
   }
