@@ -1,5 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import { BsCheckCircle } from 'react-icons/bs'
 
 import classNames from 'classnames/bind'
 import style from './ProductsAdmin.module.scss'
@@ -22,6 +24,11 @@ const AddProducts = () => {
   const [selectedIdCategory, setSelectedIdCategory] = useState(1)
   const [sizeDetail, setSizeDetail] = useState([])
   const [colorDetail, setColorDetail] = useState([])
+  const [isVisible, setIsVisible] = useState(false)
+
+  const navigate = useNavigate()
+
+  console.log(addProductsData)
 
   useEffect(() => {
     const fecthAllCategories = async () => {
@@ -69,30 +76,50 @@ const AddProducts = () => {
   }
 
   useEffect(() => {
-    const fecthAllSize = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8801/sizedetail/${selectedIdCategory}`)
-        setSizeDetail(Object.values(res.data[0]).filter((val) => val !== null && val !== undefined))
-      } catch (err) {
-        console.log(err)
-      }
+    const fecthSize = async () => {
+      const res = await axios.get(`http://localhost:8801/size/${selectedIdCategory}`)
+      setSizeDetail(res.data)
     }
-    fecthAllSize()
+    fecthSize()
+
+    const fecthColor = async () => {
+      const res = await axios.get(`http://localhost:8801/color/${selectedIdCategory}`)
+      setColorDetail(res.data)
+    }
+    fecthColor()
   }, [selectedIdCategory])
 
-  useEffect(() => {
-    const fecthAllcolor = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8801/colordetail/${selectedIdCategory}`)
-        setColorDetail(
-          Object.values(res.data[0]).filter((val) => val !== null && val !== undefined),
-        )
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    fecthAllcolor()
-  }, [selectedIdCategory])
+  const handleClickAddProduct = async () => {
+    await axios
+      .post('http://localhost:8801/products/add', {
+        name: addProductsData.addProductName,
+        gender: addProductsData.addProductGender,
+        idcategorize: addProductsData.addProductCategory,
+        imgPrimary: 'No data',
+        sold: 0,
+        price: addProductsData.addProductPrice,
+        discount: addProductsData.addProductDiscount,
+        amount: addProductsData.addProductAmount,
+        status: 'onsale',
+      })
+      .then((res) => {
+        if (res.data.status === 'success') {
+          setIsVisible(true)
+          setTimeout(() => {
+            setIsVisible(false)
+            setAddProductsData({
+              addProductName: '',
+              addProductPrice: '',
+              addProductCategory: '',
+              addProductAmount: '',
+              addProductDiscount: '',
+              addProductGender: '',
+              addProductDescription: '',
+            })
+          }, 1000)
+        }
+      })
+  }
 
   return (
     <div className={cx('addProducts-wrapper')} style={{ margin: '0' }}>
@@ -186,6 +213,7 @@ const AddProducts = () => {
               cols="30"
               rows="15"
               placeholder="Nhập mô tả sản phẩm"
+              value={addProductsData.addProductDescription}
               onChange={handleAddProductData}
             ></textarea>
           </div>
@@ -299,11 +327,11 @@ const AddProducts = () => {
                 <div className={cx('ontions')}>
                   {sizeDetail.length === 0 && <p>Chọn loại hàng!!</p>}
                   {sizeDetail &&
-                    sizeDetail.map((size, index) => {
+                    sizeDetail.map((size) => {
                       return (
-                        <Fragment key={index}>
-                          <input type="checkbox" id={size} onChange={handleCheckboxSize} />
-                          <label htmlFor={size}>{size}</label>
+                        <Fragment key={size.id}>
+                          <input type="checkbox" id={size.size} onChange={handleCheckboxSize} />
+                          <label htmlFor={size.size}>{size.size}</label>
                         </Fragment>
                       )
                     })}
@@ -321,11 +349,11 @@ const AddProducts = () => {
                 <div className={cx('ontions')}>
                   {colorDetail.length === 0 && <p>Chọn loại hàng!!</p>}
                   {colorDetail &&
-                    colorDetail.map((size, index) => {
+                    colorDetail.map((color) => {
                       return (
-                        <Fragment key={index}>
-                          <input type="checkbox" id={size} onChange={handleCheckboxSize} />
-                          <label htmlFor={size}>{size}</label>
+                        <Fragment key={color.id}>
+                          <input type="checkbox" id={color.color} onChange={handleCheckboxColor} />
+                          <label htmlFor={color.color}>{color.color}</label>
                         </Fragment>
                       )
                     })}
@@ -336,9 +364,19 @@ const AddProducts = () => {
         </section>
       </div>
       <div className={cx('row', 'box-button')} style={{ margin: '0' }}>
-        <button className={cx('btn-add', 'active')}>Add Product</button>
+        <button className={cx('btn-add', 'active')} onClick={handleClickAddProduct}>
+          Add Product
+        </button>
         <button className={cx('btn-save')}>Save Product</button>
       </div>
+      {isVisible && (
+        <div className={cx('box-notiOrder')}>
+          <div className={cx('notiOrder', 'success')}>
+            <BsCheckCircle className={cx('icon')} />
+            <span>Đặt hàng thành công</span>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

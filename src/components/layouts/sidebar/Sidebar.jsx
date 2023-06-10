@@ -14,6 +14,12 @@ const Sidebar = () => {
 }
 
 const SidebarAdmin = () => {
+  const logout = () => {
+    localStorage.removeItem('DATA_USER_INFO')
+
+    window.location.href = '/home/user/login'
+  }
+
   return (
     <div>
       <div className={cx('sidebar-admin')}>
@@ -67,7 +73,7 @@ const SidebarAdmin = () => {
 
           <li className={cx('sidebar-admin-item')}>
             <div className={cx('sidebar-admin-link')}>
-              <Link to="/home/user/login" className={cx('sidebar-admin-link')}>
+              <Link to="/home/user/login" className={cx('sidebar-admin-link')} onClick={logout}>
                 <BiLogOut className={cx('sidebar-admin-icon')} />
                 Đăng xuất
               </Link>

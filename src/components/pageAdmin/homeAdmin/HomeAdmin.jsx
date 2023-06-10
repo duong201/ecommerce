@@ -23,16 +23,7 @@ const AdminPage = () => {
         </div>
       </div>
 
-      {/* <div className="row" style={{ margin: '0' }}>
-        <div className="l-4 box-featured">
-          <Featured />
-        </div>
-        <div className="l-8 box-chart">
-          <Chart />
-        </div>
-      </div>
-
-      <div className="row" style={{ margin: '0' }}>
+      {/*<div className="row" style={{ margin: '0' }}>
         <div className="l-12 box-listContainer">
           <div className="listContainer">
             <span className="listContainer-header">Top 10 bán chạy</span>

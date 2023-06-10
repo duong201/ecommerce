@@ -18,6 +18,8 @@ import ProductsAdmin from './components/pageAdmin/productsAdmin/ProductsAdmin'
 import AddProducts from './components/pageAdmin/productsAdmin/AddProducts'
 import PageSearch from './components/pageMain/pageSearch/PageSearch'
 
+const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
+
 function App() {
   useEffect(() => {
     document.title = 'Tipee'

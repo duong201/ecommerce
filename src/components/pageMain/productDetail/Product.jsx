@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { BsStarFill, BsStarHalf, BsStar, BsCartPlus } from 'react-icons/bs'
 import { FaMoneyCheck } from 'react-icons/fa'
 
@@ -11,29 +11,30 @@ const Product = ({ product, addToCart }) => {
   const [idcate, setIdCate] = useState(product.idcategorize)
   const [size, setSize] = useState([])
   const [color, setColor] = useState([])
+  const [dataColor, setDataColor] = useState('')
+  const [dataSize, setDataSize] = useState('')
 
   useEffect(() => {
     const fecthSize = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8801/sizedetail/${product.idcategorize}`)
-        setSize(Object.values(res.data[0]).filter((val) => val !== null && val !== undefined))
-      } catch (err) {
-        console.log(err)
-      }
+      const res = await axios.get(`http://localhost:8801/size/${idcate}`)
+      setSize(res.data)
     }
     fecthSize()
 
     const fecthColor = async () => {
-      try {
-        const res = await axios.get(`http://localhost:8801/colordetail/${product.idcategorize}`)
-        // setColor(Object.values(res.data[0]).filter((val) => val !== null && val !== undefined))
-        setColor(res.data[0])
-      } catch (err) {
-        console.log(err)
-      }
+      const res = await axios.get(`http://localhost:8801/color/${idcate}`)
+      setColor(res.data)
     }
     fecthColor()
   }, [idcate])
+
+  const handleDataColor = (event) => {
+    setDataColor(event.target.value)
+  }
+
+  const handleDataSize = (event) => {
+    setDataSize(event.target.value)
+  }
 
   return (
     <div className="row" style={{ margin: '0' }}>
@@ -101,23 +102,46 @@ const Product = ({ product, addToCart }) => {
 
         <div className={cx('clotherColor')}>
           <div className={cx('clotherColor-item')}>Màu:</div>
-          {color.map((item, index) => (
-            <div className={cx('clotherColor-item')} key={index}>
-              {item}
-            </div>
+          {color.map((color) => (
+            <label key={color.id} htmlFor={`color${color.id}`} className={cx('radio-button')}>
+              <input
+                type="radio"
+                className={cx('radio-input')}
+                id={`color${color.id}`}
+                name="color"
+                value={color.color}
+                checked={dataColor === color.color}
+                onChange={handleDataColor}
+              />
+              <span className={cx('radio-label')}>{color.color}</span>
+            </label>
           ))}
         </div>
 
         <div className={cx('clotherSize')}>
           <div className={cx('clotherSize-item')}>Size:</div>
-          {size.map((item, index) => (
-            <div className={cx('clotherSize-item')} key={index}>
-              {item}
-            </div>
+          {size.map((size) => (
+            <label key={size.id} htmlFor={`size${size.id}`} className={cx('radio-button')}>
+              <input
+                type="radio"
+                className={cx('radio-input')}
+                id={`size${size.id}`}
+                name="size"
+                value={size.size}
+                checked={dataSize === size.size}
+                onChange={handleDataSize}
+              />
+              <span className={cx('radio-label')}>{size.size}</span>
+            </label>
           ))}
         </div>
 
-        <button className={cx('addcart-btn')} onClick={() => addToCart(product)}>
+        <button
+          className={cx('addcart-btn')}
+          onClick={() => {
+            dataColor && dataSize ? addToCart(product, dataColor, dataSize) : console.log('error')
+          }}
+        >
           <BsCartPlus className={cx('addcart-icon')} />
           Thêm vào giỏ hàng
         </button>

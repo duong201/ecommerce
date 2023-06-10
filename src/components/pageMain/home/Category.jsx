@@ -1,36 +1,33 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 import classNames from 'classnames/bind'
 import styles from './Home.module.scss'
 const cx = classNames.bind(styles)
 
 const Category = () => {
-  const data = [
-    'Thời trang nữ',
-    'Thời trang nam',
-    'Giày dép nữ',
-    'Giày dép nam',
-    'Phụ kiện nữ',
-    'Phụ kiện nam',
-    'Đồng hồ',
-    'Thiết bị điện tử',
-    'Phụ kiện & điện thoại',
-    'Thiết bị gia dụng',
-    'Mẹ & Bé',
-    'Nhà cửa & đời sống',
-    'Thể thao & du lịch',
-    'Sắc đẹp & sức khỏe',
-    'Nhà sách online',
-  ]
+  const [categorize, setCategorize] = useState([])
+
+  useEffect(() => {
+    const fecthAllCategorize = async () => {
+      try {
+        const res = await axios.get('http://localhost:8801/categorize')
+        setCategorize(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    fecthAllCategorize()
+  }, [])
 
   return (
     <div className={cx('category-wrapper')}>
       <div className={cx('category')}>
-        {data.map((value, index) => {
+        {categorize.map((cate) => {
           return (
-            <Link className={cx('category-link')} to="/products" key={index}>
-              <span>{value}</span>
+            <Link className={cx('category-link')} to="/products" key={cate.id}>
+              <span>{cate.name}</span>
             </Link>
           )
         })}

@@ -4,10 +4,10 @@ import { useParams } from 'react-router-dom'
 import Suggest from '../../layouts/suggest/Suggest'
 import Comment from './Comment'
 import Product from './Product'
+import InfoProduct from './InfoProduct'
 
 import classNames from 'classnames/bind'
 import styles from './ProductDetail.module.scss'
-import InfoProduct from './InfoProduct'
 const cx = classNames.bind(styles)
 
 const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
@@ -36,12 +36,14 @@ const ProductDetail = ({ handleChangeCartLength }) => {
     setInfoOrRate(true)
   }, [id])
 
-  const addToCart = async (product) => {
+  const addToCart = async (product, dataColor, dataSize) => {
     const amount = 1
     await axios
       .post('http://localhost:8801/add-to-cart', {
         iduser: DATA_USER_INFO.id,
         idproduct: product.id,
+        color: dataColor,
+        size: dataSize,
         amount: amount,
         checked: 0,
       })

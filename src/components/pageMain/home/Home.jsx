@@ -7,12 +7,10 @@ import axios from 'axios'
 
 import classNames from 'classnames/bind'
 import styles from './Home.module.scss'
+import TopSelling from './TopSelling'
 const cx = classNames.bind(styles)
 
 const Home = () => {
-  const idUser = sessionStorage.getItem('id')
-  const username = sessionStorage.getItem('name')
-
   return (
     <>
       <main className={cx('wrapper')}>
@@ -30,6 +28,13 @@ const Home = () => {
               <div className="l-12">
                 <div className={cx('plash-deal')}>
                   <PlashDeal />
+                </div>
+              </div>
+            </div>
+            <div className="row" style={{ margin: '0', marginTop: '32px' }}>
+              <div className="l-12">
+                <div className={cx('plash-deal')}>
+                  <TopSelling />
                 </div>
               </div>
             </div>

@@ -102,6 +102,7 @@ const CartItem = ({ item, iduser, handleCartsChange, handleChangeAmount }) => {
           <span className={cx('new-price')}>
             {Intl.NumberFormat().format((item.price * (100 - item.discount)) / 100)}
           </span>
+          <span className={cx('type')}>Loại: {item.color + ', ' + item.size}</span>
         </div>
       </div>
 

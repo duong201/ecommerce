@@ -56,8 +56,8 @@ const Order = () => {
               iduser: DATA_USER_INFO.id,
               idproduct: data.idproduct,
               amount: data.amount,
-              price: (data.price * (100 - data.discount)) / 100,
-              description: 'size',
+              price: ((data.price * (100 - data.discount)) / 100) * data.amount,
+              description: `${data.color}, ${data.size} `,
               idaddress: 1,
               status: 'Đang chuẩn bị hàng',
               payment: dataPayment,
@@ -151,7 +151,7 @@ const Order = () => {
                       className={cx('product-type')}
                       style={{ width: '10%', textAlign: 'center' }}
                     >
-                      {item.amount}
+                      {item.color + ',' + item.size}
                     </span>
                     <span
                       className={cx('product-price')}

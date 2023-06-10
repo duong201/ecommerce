@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Slider from 'react-slick'
 import axios from 'axios'
-import { IoMdFlash } from 'react-icons/io'
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
+import { MdShoppingCartCheckout } from 'react-icons/md'
 
 import classNames from 'classnames/bind'
 import styles from './Home.module.scss'
-import { Link } from 'react-router-dom'
 const cx = classNames.bind(styles)
 
 const NextArrow = (props) => {
@@ -31,7 +31,7 @@ const PrevArrow = (props) => {
   )
 }
 
-const PlashDeal = () => {
+const TopSelling = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
@@ -57,14 +57,14 @@ const PlashDeal = () => {
   }
 
   return (
-    <div className={cx('plashdeal-wrapper')}>
+    <div className={cx('topSelling-wrapper')}>
       <div className="container">
         <div className="row" style={{ margin: '0' }}>
           <div className="l-8">
             <div className={cx('flasdeal-title')}>
               <h2>
-                <IoMdFlash />
-                flash sale
+                <MdShoppingCartCheckout />
+                Top Bán Chạy
               </h2>
             </div>
             <div className="l-4"></div>
@@ -73,13 +73,18 @@ const PlashDeal = () => {
         <div className={cx('flasdeal-bottom')}>
           <Slider {...settings}>
             {products
-              .sort((a, b) => b.discount - a.discount)
+              .sort((a, b) => b.sold - a.sold)
               .slice(0, 10)
               .map((product) => {
                 return (
                   <div className={cx('flasdeal-box')} key={product.id}>
                     <div className={cx('product')}>
-                      <span className={cx('discount')}>- {product.discount} %</span>
+                      <span
+                        className={cx('selling')}
+                        style={{ backgroundColor: 'var(--primary-color)' }}
+                      >
+                        {product.sold} đã bán
+                      </span>
                       <div
                         className={cx('img')}
                         style={{ backgroundImage: `url(${product.imgPrimary})` }}
@@ -110,4 +115,4 @@ const PlashDeal = () => {
   )
 }
 
-export default PlashDeal
+export default TopSelling
