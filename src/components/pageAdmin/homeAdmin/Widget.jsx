@@ -34,7 +34,7 @@ const Widget = ({ type }) => {
     fecthAllProducts()
     const fecthAllOrder = async () => {
       try {
-        const res = await axios.get('http://localhost:8801/order')
+        const res = await axios.get('http://localhost:8801/order/list')
         setOrder(res.data)
       } catch (err) {
         console.log(err)
@@ -48,7 +48,7 @@ const Widget = ({ type }) => {
   switch (type) {
     case 'user':
       data = {
-        title: 'users',
+        title: 'Users',
         isMoney: false,
         link: '/admin/users',
         amount: user.length,
@@ -59,7 +59,7 @@ const Widget = ({ type }) => {
 
     case 'product':
       data = {
-        title: 'products',
+        title: 'Products',
         isMoney: false,
         link: '/admin/products',
         amount: products.length,
@@ -70,7 +70,7 @@ const Widget = ({ type }) => {
 
     case 'order':
       data = {
-        title: 'orders',
+        title: 'Orders',
         isMoney: false,
         amount: order.length,
         link: '/admin/list-order',

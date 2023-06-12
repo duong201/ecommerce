@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
 import { BsCheckCircle } from 'react-icons/bs'
 
 import classNames from 'classnames/bind'
@@ -25,8 +24,6 @@ const AddProducts = () => {
   const [sizeDetail, setSizeDetail] = useState([])
   const [colorDetail, setColorDetail] = useState([])
   const [isVisible, setIsVisible] = useState(false)
-
-  const navigate = useNavigate()
 
   console.log(addProductsData)
 

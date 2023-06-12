@@ -58,7 +58,9 @@ const Comment = ({ iduser, idproduct }) => {
   }
 
   const rateResult =
-    Math.round((comments.reduce((rate, comment) => rate + comment.rate, 0) / comments.length) * 10) / 10
+    Math.round(
+      (comments.reduce((rate, comment) => rate + comment.rate, 0) / comments.length) * 10,
+    ) / 10
 
   return (
     <div className={cx('comment-content')}>

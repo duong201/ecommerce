@@ -14,7 +14,22 @@ const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isActive, setIsActive] = useState('')
-  const [action, setAction] = useState('')
+  const [phoneActive, setPhoneActive] = useState(false)
+  const [dataRegister, setDataRegister] = useState({
+    username: '',
+    password: '',
+  })
+  const [phoneRegister, setPhoneRegister] = useState('')
+
+  const handleInputPhone = (event) => {
+    const { value } = event.target
+    setPhoneRegister(value)
+  }
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target
+    setDataRegister({ ...dataRegister, [name]: value })
+  }
 
   useEffect(() => {
     setIsActive(loginOrLogout.user)
@@ -38,7 +53,7 @@ const Login = () => {
         response.data.result.forEach((data) => {
           if (data.level === 1) {
             if (response.data.status === 'error') {
-              alert('tai khoan mat khau khong chinh xac')
+              console.log(response.data.status)
             } else if (response.data.status === 'success') {
               localStorage.setItem('DATA_USER_INFO', JSON.stringify(data))
 
@@ -58,6 +73,42 @@ const Login = () => {
       })
   }
 
+  const handleRegisterCheckphone = () => {
+    axios
+      .post('http://localhost:8801/user/register/checkphone', {
+        phone: phoneRegister,
+      })
+      .then((response) => {
+        if (response.data.status === 'error') {
+          setPhoneActive(false)
+        } else if (response.data.status === 'success') {
+          setPhoneActive(true)
+        }
+      })
+  }
+
+  const handleRegister = () => {
+    axios
+      .post('http://localhost:8801/user/register', {
+        phone: phoneRegister,
+        username: dataRegister.username,
+        password: dataRegister.password,
+      })
+      .then((response) => {
+        if (response.data.status === 'error') {
+          // console.log(response.data)
+        } else if (response.data.status === 'success') {
+          setDataRegister({
+            username: '',
+            password: '',
+          })
+          setPhoneActive(false)
+          setPhoneRegister('')
+          setIsActive('login')
+        }
+      })
+  }
+
   return (
     <div className={cx('wrapper')}>
       <div className={cx('container')}>
@@ -70,7 +121,7 @@ const Login = () => {
             </div>
             <div className={cx('l-6', 'login-left', 'login-box')}>
               {isActive === 'login' ? (
-                <form>
+                <div className={cx('form')}>
                   <h1>Đăng nhập</h1>
                   <div className={cx('social-container')}>
                     <a href="#" className={cx('social')}>
@@ -99,26 +150,60 @@ const Login = () => {
                       Đăng ký
                     </p>
                   </span>
-                </form>
+                </div>
               ) : (
                 <div>
-                  <form>
+                  <div className={cx('form')}>
                     <h1>Đăng ký</h1>
-                    <div className={cx('social-container')}>
-                      <a href="#" className={cx('social')}>
-                        <FaFacebookF className={cx('facebook-icon')} />
-                      </a>
-                      <a href="#" className={cx('social')}>
-                        <FaGoogle className={cx('gmail-icon')} />
-                      </a>
-                    </div>
-                    <input type="text" placeholder="Số điện thoại" />
+                    {phoneActive ? (
+                      <>
+                        <input
+                          type="text"
+                          name="username"
+                          value={dataRegister.username}
+                          onChange={handleInputChange}
+                          placeholder="Tên người dùng"
+                        />
+                        <input
+                          type="password"
+                          name="password"
+                          value={dataRegister.password}
+                          onChange={handleInputChange}
+                          placeholder="Mật khẩu"
+                        />
+                        <input
+                          type="password"
+                          name="confirmPassword"
+                          placeholder="Xác nhận mật khẩu"
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <div className={cx('social-container')}>
+                          <a href="#" className={cx('social')}>
+                            <FaFacebookF className={cx('facebook-icon')} />
+                          </a>
+                          <a href="#" className={cx('social')}>
+                            <FaGoogle className={cx('gmail-icon')} />
+                          </a>
+                        </div>
+                        <input
+                          type="text"
+                          name="phone"
+                          value={phoneRegister}
+                          onChange={handleInputPhone}
+                          placeholder="Số điện thoại"
+                        />
+                      </>
+                    )}
                     <span style={{ margin: '12px auto' }}>
                       Bằng việc đăng ký, bạn đã đồng ý về Điều khoản dịch vụ và Chính sách bảo mật
                     </span>
-                    <button>Đăng ký</button>
+                    <button onClick={phoneActive ? handleRegister : handleRegisterCheckphone}>
+                      Đăng ký
+                    </button>
                     <span>
-                      Bạn đã biết đến Tipee?{' '}
+                      Bạn đã biết đến Tipee?
                       <p
                         onClick={() => {
                           setIsActive('login')
@@ -127,7 +212,7 @@ const Login = () => {
                         Đăng nhập
                       </p>
                     </span>
-                  </form>
+                  </div>
                 </div>
               )}
             </div>

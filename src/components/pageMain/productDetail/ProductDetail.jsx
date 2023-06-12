@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Suggest from '../../layouts/suggest/Suggest'
 import Comment from './Comment'
 import Product from './Product'
@@ -17,6 +17,8 @@ const ProductDetail = ({ handleChangeCartLength }) => {
   const [product, setProduct] = useState({})
   const [isVisible, setIsVisible] = useState(false)
   const [infoOrRate, setInfoOrRate] = useState(true)
+
+  const navigate = useNavigate()
 
   const toggleInfoToRate = infoOrRate ? 'active' : null
   const toggleRateToInfo = infoOrRate ? null : 'active'
@@ -36,8 +38,7 @@ const ProductDetail = ({ handleChangeCartLength }) => {
     setInfoOrRate(true)
   }, [id])
 
-  const addToCart = async (product, dataColor, dataSize) => {
-    const amount = 1
+  const addToCart = async (product, dataColor, dataSize, amount) => {
     await axios
       .post('http://localhost:8801/add-to-cart', {
         iduser: DATA_USER_INFO.id,
@@ -61,11 +62,36 @@ const ProductDetail = ({ handleChangeCartLength }) => {
       })
   }
 
+  const addToOrder = async (product, dataColor, dataSize, amount) => {
+    await axios
+      .post('http://localhost:8801/add-to-cart', {
+        iduser: DATA_USER_INFO.id,
+        idproduct: product.id,
+        color: dataColor,
+        size: dataSize,
+        amount: amount,
+        checked: 1,
+      })
+      .then((res) => {
+        if (res.data.status === 'success') {
+          setIsVisible(true)
+          setTimeout(() => {
+            setIsVisible(false)
+            navigate('/home/order')
+          }, 2000)
+          handleChangeCartLength(1)
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   return (
     <main>
       <div className="grid wide">
         <div className={cx('box-details')} key={product.id}>
-          <Product product={product} addToCart={addToCart} />
+          <Product product={product} addToCart={addToCart} addToOrder={addToOrder} />
         </div>
         <div className="row" style={{ margin: '0' }}>
           <div className={cx('cmt-wrapper')}>

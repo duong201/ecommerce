@@ -33,9 +33,9 @@ const SidebarAdmin = () => {
           </li>
           <li className={cx('sidebar-admin-item')}>Danh sách</li>
           <li className={cx('sidebar-admin-item')}>
-            <Link to="/admin/users" className={cx('sidebar-admin-link')}>
+            <Link to="/admin/orders" className={cx('sidebar-admin-link')}>
               <BsFillPersonLinesFill className={cx('sidebar-admin-icon')} />
-              Người dùng
+              Đặt hàng
             </Link>
           </li>
           <li className={cx('sidebar-admin-item')}>

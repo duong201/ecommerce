@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { BsStarFill, BsStarHalf, BsStar, BsCartPlus } from 'react-icons/bs'
-import { FaMoneyCheck } from 'react-icons/fa'
+import { FaMinus, FaMoneyCheck, FaPlus } from 'react-icons/fa'
 
 import classNames from 'classnames/bind'
 import styles from './ProductDetail.module.scss'
 import axios from 'axios'
 const cx = classNames.bind(styles)
 
-const Product = ({ product, addToCart }) => {
+const Product = ({ product, addToCart, addToOrder }) => {
   const [idcate, setIdCate] = useState(product.idcategorize)
   const [size, setSize] = useState([])
   const [color, setColor] = useState([])
   const [dataColor, setDataColor] = useState('')
   const [dataSize, setDataSize] = useState('')
+  const [amount, setAmount] = useState(1)
+  const [disabledButton, setDisableButton] = useState(false)
 
   useEffect(() => {
     const fecthSize = async () => {
@@ -34,6 +36,19 @@ const Product = ({ product, addToCart }) => {
 
   const handleDataSize = (event) => {
     setDataSize(event.target.value)
+  }
+
+  useEffect(() => {
+    if (amount < 2) setDisableButton(true)
+  }, [amount])
+
+  const minusAmount = () => {
+    setAmount(amount - 1)
+    setDisableButton(false)
+  }
+  const plusAmount = () => {
+    setAmount(amount + 1)
+    setDisableButton(false)
   }
 
   return (
@@ -136,17 +151,39 @@ const Product = ({ product, addToCart }) => {
           ))}
         </div>
 
+        <div className={cx('product-amount')}>
+          <button
+            className={cx('btn-remove', `${disabledButton && 'disabled'}`)}
+            onClick={() => setAmount(minusAmount)}
+          >
+            <FaMinus />
+          </button>
+          <span className={cx('amount')}>{amount}</span>
+          <button className={cx('btn-remove')} onClick={() => setAmount(plusAmount)}>
+            <FaPlus />
+          </button>
+        </div>
+
         <button
           className={cx('addcart-btn')}
           onClick={() => {
-            dataColor && dataSize ? addToCart(product, dataColor, dataSize) : console.log('error')
+            dataColor && dataSize
+              ? addToCart(product, dataColor, dataSize, amount)
+              : console.log('error')
           }}
         >
           <BsCartPlus className={cx('addcart-icon')} />
           Thêm vào giỏ hàng
         </button>
 
-        <button className={cx('addToBuy-btn')}>
+        <button
+          className={cx('addToBuy-btn')}
+          onClick={() =>
+            dataColor && dataSize
+              ? addToOrder(product, dataColor, dataSize, amount)
+              : console.log('error')
+          }
+        >
           <FaMoneyCheck className={cx('addcart-icon')} />
           Mua ngay
         </button>

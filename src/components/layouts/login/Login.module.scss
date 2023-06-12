@@ -75,7 +75,7 @@
 }
 
 .login-left {
-  form {
+  .form {
     background-color: #ffffff;
     box-shadow: var(--primary-box-shadow);
     display: flex;
@@ -106,7 +106,7 @@
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      width: 250px;
+      width: 251px;
       p {
         font-size: 12px;
         margin-left: 4px;
