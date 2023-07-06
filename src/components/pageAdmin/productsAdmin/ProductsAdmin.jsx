@@ -66,7 +66,9 @@ const ProductsAdmin = () => {
                       <td className={cx('id')}>{product.id}</td>
                       <td className={cx('product')}>
                         <img src={product.imgPrimary} alt="" />
-                        <span>{product.name}</span>
+                        <span>
+                          <Link to={`/admin/products/change/${product.id}`}>{product.name}</Link>
+                        </span>
                       </td>
                       <td className={cx('price')}>{Intl.NumberFormat().format(product.price)}</td>
                       <td className={cx('discount')}>{product.discount} %</td>

@@ -60,11 +60,14 @@
   border-radius: 0.5rem;
   margin-left: 1rem;
   h1 {
-    font-size: 3.2rem;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #ee4d2d;
   }
   p {
-    margin: 2rem 0;
-    font-size: 1.4rem;
+    margin: 0.8rem 0 2rem 0;
+    font-size: 1.8rem;
+    font-weight: 600;
   }
   ul {
     position: absolute;
@@ -90,6 +93,21 @@
   .slider-right {
     width: 70%;
     margin: auto 24px;
+
+    .btn2 {
+      padding: 0.4rem 0.8rem;
+      border-radius: 3px;
+      color: #ee4d2d;
+      border: 1px solid #ee4d2d;
+      background-color: var(--white-color);
+      transition: all 0.2s linear;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #ee4d2d;
+        color: var(--white-color);
+      }
+    }
   }
   img {
     width: 300px;

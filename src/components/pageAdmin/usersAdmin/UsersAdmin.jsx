@@ -65,7 +65,6 @@ const UsersAdmin = () => {
                       <td className={cx('datetime')}>{order.dateorder}</td>
                       <td className={cx('payment')}>{order.payment}</td>
                       <td className={cx('status')}>{order.status}</td>
-                      <td className={cx('detail')}>Chi tiết</td>
                     </tr>
                   )
                 })}

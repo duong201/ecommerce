@@ -17,6 +17,8 @@ const Order = () => {
   const [dataPayment, setDataPayment] = useState('')
   const [isVisible, setIsVisible] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [isIsReorder, setIsReorder] = useState(false)
+  const [reOrder, setReOrder] = useState([])
   const navigate = useNavigate()
 
   const handleDataPayment = (event) => {
@@ -35,17 +37,17 @@ const Order = () => {
     fecthAllCart()
   }, [])
 
+  const myDate = new Date()
+  const hours = myDate.getHours()
+  const minutes = myDate.getMinutes()
+  const seconds = myDate.getSeconds()
+  const day = myDate.getDate()
+  const month = myDate.getMonth() + 1
+  const year = myDate.getFullYear()
+
+  const dateOrder = `${hours}:${minutes}:${seconds} - ${day}/${month}/${year}`
+
   const handleAddOrder = () => {
-    const myDate = new Date()
-    const hours = myDate.getHours()
-    const minutes = myDate.getMinutes()
-    const seconds = myDate.getSeconds()
-    const day = myDate.getDate()
-    const month = myDate.getMonth() + 1 // Lưu ý: tháng bắt đầu từ 0 nên cần phải cộng thêm 1
-    const year = myDate.getFullYear()
-
-    const dateOrder = `${hours}:${minutes}:${seconds} - ${day}/${month}/${year}`
-
     if (dataPayment.length > 0) {
       dataCart
         .filter((key) => key.checked === 1)
@@ -71,7 +73,7 @@ const Order = () => {
                   navigate('/')
                 }, 1000)
               } else {
-                console.log(res.data.message)
+                setIsReorder(true)
               }
             })
             .catch((err) => {
@@ -84,6 +86,46 @@ const Order = () => {
         setIsError(false)
       }, 1500)
     }
+  }
+
+  const handleReAdd = () => {
+    setIsReorder(false)
+    dataCart
+      .filter((key) => key.checked === 1)
+      .map((data) => {
+        axios
+          .post('http://localhost:8801/order/readd', {
+            idcart: data.id,
+            iduser: DATA_USER_INFO.id,
+            idproduct: data.idproduct,
+            amount: data.amount,
+            price: ((data.price * (100 - data.discount)) / 100) * data.amount,
+            description: `${data.color}, ${data.size} `,
+            idaddress: 1,
+            status: 'Đang chuẩn bị hàng',
+            payment: dataPayment,
+            dateorder: dateOrder,
+          })
+          .then((res) => {
+            if (res.data.status === 'success') {
+              setIsVisible(true)
+              setTimeout(() => {
+                setIsVisible(false)
+                navigate('/')
+              }, 1000)
+            } else {
+              console.log(data.status.result)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      })
+  }
+
+  const handleExitToCart = () => {
+    setIsReorder(false)
+    setReOrder([])
   }
 
   const resultTotalPrice = dataCart
@@ -279,6 +321,19 @@ const Order = () => {
           <div className={cx('notiOrder', 'error')}>
             <ImCancelCircle className={cx('icon')} />
             <span>Chưa chọn phương thức thanh toán</span>
+          </div>
+        </div>
+      )}
+
+      {isIsReorder && (
+        <div className={cx('box-notiOrder')}>
+          <div className={cx('notiOrder', 'error')}>
+            <ImCancelCircle className={cx('icon')} />
+            <span>Bạn vừa đặt sản phẩm này rồi!!</span>
+            <div className={cx('box-btn')}>
+              <button onClick={handleReAdd}>Mua tiếp</button>
+              <button onClick={handleExitToCart}>Hủy</button>
+            </div>
           </div>
         </div>
       )}

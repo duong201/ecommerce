@@ -17,6 +17,8 @@ import UsersAdmin from './components/pageAdmin/usersAdmin/UsersAdmin'
 import ProductsAdmin from './components/pageAdmin/productsAdmin/ProductsAdmin'
 import AddProducts from './components/pageAdmin/productsAdmin/AddProducts'
 import PageSearch from './components/pageMain/pageSearch/PageSearch'
+import Test from './features/Test'
+import ChangeProduct from './components/pageAdmin/productsAdmin/ChangeProduct'
 
 const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
 
@@ -47,6 +49,7 @@ function App() {
             <Route path="contract" element={<Contract />} />
             <Route path="search/:inputSearch" element={<PageSearch />} />
             <Route path="*" element={<ErrorPages />} />
+            <Route path="/test" element={<Test />} />
           </Route>
           <Route path="/home" element={<SecondLayout />}>
             <Route path="cart" element={<Cart />} />
@@ -58,6 +61,7 @@ function App() {
             <Route path="orders" element={<UsersAdmin />} />
             <Route path="products" element={<ProductsAdmin />} />
             <Route path="products/add" element={<AddProducts />} />
+            <Route path="products/change/:iduser" element={<ChangeProduct />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaFacebookF, FaGoogle } from 'react-icons/fa'
 import EcommerceLogo from './ecommerceLogo.png'
 
@@ -6,11 +6,14 @@ import classNames from 'classnames/bind'
 import styles from './Login.module.scss'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { BsCheckCircle } from 'react-icons/bs'
+import { ImCancelCircle } from 'react-icons/im'
 const cx = classNames.bind(styles)
 
 const Login = () => {
   const loginOrLogout = useParams()
-
+  const [isVisible, setIsVisible] = useState(false)
+  const [isError, setIsError] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isActive, setIsActive] = useState('')
@@ -20,6 +23,18 @@ const Login = () => {
     password: '',
   })
   const [phoneRegister, setPhoneRegister] = useState('')
+
+  const handleRegisterSuccess = () => {
+    setIsVisible(false)
+    setPhoneActive(false)
+    setPhoneRegister('')
+    setIsActive('login')
+  }
+
+  const handleRegisterErrorNumber = () => {
+    setIsError(false)
+    setPhoneRegister('')
+  }
 
   const handleInputPhone = (event) => {
     const { value } = event.target
@@ -80,6 +95,7 @@ const Login = () => {
       })
       .then((response) => {
         if (response.data.status === 'error') {
+          setIsError(true)
           setPhoneActive(false)
         } else if (response.data.status === 'success') {
           setPhoneActive(true)
@@ -93,18 +109,16 @@ const Login = () => {
         phone: phoneRegister,
         username: dataRegister.username,
         password: dataRegister.password,
+        level: 1,
       })
       .then((response) => {
         if (response.data.status === 'error') {
-          // console.log(response.data)
         } else if (response.data.status === 'success') {
           setDataRegister({
             username: '',
             password: '',
           })
-          setPhoneActive(false)
-          setPhoneRegister('')
-          setIsActive('login')
+          setIsVisible(true)
         }
       })
   }
@@ -219,6 +233,24 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {isVisible && (
+        <div className={cx('box-notiOrder')}>
+          <div className={cx('notiOrder', 'success')}>
+            <BsCheckCircle className={cx('icon')} />
+            <span>Đăng ký thành công</span>
+            <button onClick={handleRegisterSuccess}>Về trang đăng nhập</button>
+          </div>
+        </div>
+      )}
+      {isError && (
+        <div className={cx('box-notiOrder')}>
+          <div className={cx('notiOrder', 'error')}>
+            <ImCancelCircle className={cx('icon')} />
+            <span>Số điện thoại trùng</span>
+            <button onClick={handleRegisterErrorNumber}>Nhập lại số điện thoại</button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

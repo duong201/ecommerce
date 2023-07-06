@@ -8,7 +8,9 @@ import classNames from 'classnames/bind'
 import styles from './ProductDetail.module.scss'
 const cx = classNames.bind(styles)
 
-const Comment = ({ iduser, idproduct }) => {
+const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
+
+const Comment = ({ idproduct }) => {
   const [commentRate, setCommentRate] = useState('')
   const [commentText, setCommentText] = useState('')
   const [commentFile, setCommentFile] = useState()
@@ -25,7 +27,7 @@ const Comment = ({ iduser, idproduct }) => {
   const sendComment = async () => {
     await axios
       .post('http://localhost:8801/comment/add', {
-        iduser: iduser,
+        iduser: DATA_USER_INFO.id,
         idproduct: idproduct,
         rate: commentRate,
         comment: commentText,

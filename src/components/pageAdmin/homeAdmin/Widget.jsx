@@ -51,8 +51,8 @@ const Widget = ({ type }) => {
         title: 'Users',
         isMoney: false,
         link: '/admin/users',
-        amount: user.length,
-        link_title: 'See all users',
+        amount: user.length - 1,
+        link_title: '',
         // icon: <PermIdentityIcon className="widget-icon" />,
       }
       break

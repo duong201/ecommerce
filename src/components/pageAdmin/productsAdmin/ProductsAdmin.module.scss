@@ -205,7 +205,8 @@ table {
 .addProducts-gender,
 .addProducts-discount,
 .addProducts-amount,
-.addProducts-description {
+.addProducts-description,
+.addProducts-linkImg {
   display: flex;
   flex-direction: column;
   transition: all 0.2s linear;
@@ -308,75 +309,49 @@ label {
   flex-direction: column;
 }
 
-.box-option {
-  width: 100%;
-  min-height: 58px;
-  border: 1px dashed var(--primary-color);
-  margin-top: 10px;
-  border-radius: 3px;
-  margin-bottom: 10px;
+.ontions {
+  width: 32rem;
   display: flex;
+  flex-wrap: wrap;
+  height: 20rem;
+  overflow-y: scroll;
+  justify-content: space-between;
+  margin-top: 12px;
   padding: 10px;
-  overflow-x: scroll;
 
   &::-webkit-scrollbar {
-    height: 6px;
+    width: 5px;
   }
 
-  &::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 2px;
-  }
-
-  p {
-    text-align: center;
-    text-transform: capitalize;
-    color: var(--white-color);
-    min-width: 5rem;
-    padding: 6px;
-    background-color: var(--primary-color);
-    border-radius: 3px;
-    margin-right: 12px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
-.ontions {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-
-  label {
-    width: auto;
+  .option-item {
+    width: 27rem;
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
   }
 
   input[type='checkbox'] {
-    display: none;
-  }
-
-  input[type='checkbox'] + label {
-    display: flex;
-    justify-content: center;
-    min-width: 5rem;
-    padding: 6px;
-    background-color: var(--white-color);
-    border: 1px solid var(--primary-color);
-    border-radius: 3px;
-    margin-left: 6px;
-    margin-right: 6px;
+    width: 2rem;
+    height: 2rem;
     cursor: pointer;
   }
 
-  input[type='checkbox']:checked + label {
-    background-color: var(--primary-color);
-    color: var(--white-color);
+  label {
+    margin: auto 0;
+    margin-left: 16px;
+    text-align: left;
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  input[type='number'] {
+    width: 9rem;
+    height: 3rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    padding-left: 4px;
   }
 }
 

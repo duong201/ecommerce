@@ -5,6 +5,7 @@ import { FaMinus, FaMoneyCheck, FaPlus } from 'react-icons/fa'
 import classNames from 'classnames/bind'
 import styles from './ProductDetail.module.scss'
 import axios from 'axios'
+import { ImCancelCircle } from 'react-icons/im'
 const cx = classNames.bind(styles)
 
 const Product = ({ product, addToCart, addToOrder }) => {
@@ -15,6 +16,7 @@ const Product = ({ product, addToCart, addToOrder }) => {
   const [dataSize, setDataSize] = useState('')
   const [amount, setAmount] = useState(1)
   const [disabledButton, setDisableButton] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   useEffect(() => {
     const fecthSize = async () => {
@@ -169,7 +171,7 @@ const Product = ({ product, addToCart, addToOrder }) => {
           onClick={() => {
             dataColor && dataSize
               ? addToCart(product, dataColor, dataSize, amount)
-              : console.log('error')
+              : setIsError(true)
           }}
         >
           <BsCartPlus className={cx('addcart-icon')} />
@@ -181,17 +183,22 @@ const Product = ({ product, addToCart, addToOrder }) => {
           onClick={() =>
             dataColor && dataSize
               ? addToOrder(product, dataColor, dataSize, amount)
-              : console.log('error')
+              : setIsError(true)
           }
         >
           <FaMoneyCheck className={cx('addcart-icon')} />
           Mua ngay
         </button>
-
-        {/* <span id="notiCart" className={cx('notiCart')}>
-                Bạn cần đăng nhập để thêm vào giỏ hàng.
-              </span> */}
       </div>
+      {isError && (
+        <div className={cx('box-notiOrder')}>
+          <div className={cx('notiOrder', 'error')}>
+            <ImCancelCircle className={cx('icon')} />
+            <span>Chưa chọn color, size</span>
+            <button onClick={() => setIsError(false)}>Ok</button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

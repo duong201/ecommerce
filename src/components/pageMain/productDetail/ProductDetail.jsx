@@ -8,6 +8,7 @@ import InfoProduct from './InfoProduct'
 
 import classNames from 'classnames/bind'
 import styles from './ProductDetail.module.scss'
+import { ImCancelCircle } from 'react-icons/im'
 const cx = classNames.bind(styles)
 
 const DATA_USER_INFO = JSON.parse(localStorage.getItem('DATA_USER_INFO'))
@@ -17,6 +18,7 @@ const ProductDetail = ({ handleChangeCartLength }) => {
   const [product, setProduct] = useState({})
   const [isVisible, setIsVisible] = useState(false)
   const [infoOrRate, setInfoOrRate] = useState(true)
+  const [isError, setIsError] = useState(false)
 
   const navigate = useNavigate()
 
@@ -39,27 +41,31 @@ const ProductDetail = ({ handleChangeCartLength }) => {
   }, [id])
 
   const addToCart = async (product, dataColor, dataSize, amount) => {
-    await axios
-      .post('http://localhost:8801/add-to-cart', {
-        iduser: DATA_USER_INFO.id,
-        idproduct: product.id,
-        color: dataColor,
-        size: dataSize,
-        amount: amount,
-        checked: 0,
-      })
-      .then((res) => {
-        if (res.data.status === 'success') {
-          setIsVisible(true)
-          setTimeout(() => {
-            setIsVisible(false)
-          }, 4000)
-          handleChangeCartLength(1)
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    if (DATA_USER_INFO) {
+      await axios
+        .post('http://localhost:8801/add-to-cart', {
+          iduser: DATA_USER_INFO.id,
+          idproduct: product.id,
+          color: dataColor,
+          size: dataSize,
+          amount: amount,
+          checked: 0,
+        })
+        .then((res) => {
+          if (res.data.status === 'success') {
+            setIsVisible(true)
+            setTimeout(() => {
+              setIsVisible(false)
+            }, 4000)
+            handleChangeCartLength(1)
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    } else {
+      setIsError(true)
+    }
   }
 
   const addToOrder = async (product, dataColor, dataSize, amount) => {
@@ -80,6 +86,8 @@ const ProductDetail = ({ handleChangeCartLength }) => {
             navigate('/home/order')
           }, 2000)
           handleChangeCartLength(1)
+        } else {
+          console.log(res.data.message)
         }
       })
       .catch((error) => {
@@ -116,7 +124,7 @@ const ProductDetail = ({ handleChangeCartLength }) => {
                   </button>
                 </div>
               </div>
-              {infoOrRate ? <InfoProduct /> : <Comment iduser={DATA_USER_INFO.id} idproduct={id} />}
+              {infoOrRate ? <InfoProduct /> : <Comment idproduct={id} />}
             </div>
           </div>
         </div>
@@ -128,6 +136,28 @@ const ProductDetail = ({ handleChangeCartLength }) => {
       {isVisible && (
         <div className={cx('notification')}>
           <span>Thêm vào giỏ hàng thành công</span>
+        </div>
+      )}
+
+      {isError && (
+        <div className={cx('box-notiOrder')}>
+          <div className={cx('notiOrder', 'error')}>
+            <ImCancelCircle className={cx('icon')} />
+            <span>Bạn chưa đăng nhập</span>
+            <div className={cx('box-btn')}>
+              <button
+                onClick={() => {
+                  setIsError(false)
+                  setTimeout(() => {
+                    navigate('/home/user/login')
+                  }, 1500)
+                }}
+              >
+                Đăng nhập
+              </button>
+              <button onClick={() => setIsError(false)}>Hủy</button>
+            </div>
+          </div>
         </div>
       )}
     </main>

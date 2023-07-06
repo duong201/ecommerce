@@ -10,6 +10,7 @@ const cx = classNames.bind(styles)
 const Products = () => {
   const [products, setProducts] = useState([])
   const [filter, setFilter] = useState(products)
+  const [change, setChange] = useState(0)
   let componentMounted = true
 
   const [categorize, setCategorize] = useState([])
@@ -38,9 +39,30 @@ const Products = () => {
     fecthAllCategorize()
   }, [])
 
+  useEffect(() => {
+    setFilter(filter)
+  }, [change])
+
   const filterProducts = (cate) => {
     const updateList = products.filter((x) => x.idcategorize === cate)
     setFilter(updateList)
+  }
+
+  const handleLoadSold = () => {
+    const updateList = filter.sort((a, b) => b.sold - a.sold)
+    setFilter(updateList)
+    setChange(change + 1)
+  }
+
+  const handlePriceIncrease = () => {
+    const updateList = filter.sort((a, b) => b.price - a.price)
+    setFilter(updateList)
+    setChange(change + 1)
+  }
+  const handlePriceDescrease = () => {
+    const updateList = filter.sort((a, b) => a.price - b.price)
+    setFilter(updateList)
+    setChange(change + 1)
   }
 
   return (
@@ -74,14 +96,19 @@ const Products = () => {
             <div className={cx('filter')}>
               <span className={cx('filter-label')}>Sắp xếp theo</span>
               <button className={cx('btn', 'active')}>Phổ biến</button>
-              <button className={cx('btn')}>Mới nhất</button>
-              <button className={cx('btn')}>Bán chạy</button>
+              <button className={cx('btn')} onClick={handleLoadSold}>
+                Bán chạy
+              </button>
               <span className={cx('filter-label', 'price')}>Giá</span>
-              <button className={cx('btn')}>Thấp đến Cao</button>
-              <button className={cx('btn')}>Cao đến Thấp</button>
+              <button className={cx('btn')} onClick={handlePriceDescrease}>
+                Thấp đến Cao
+              </button>
+              <button className={cx('btn')} onClick={handlePriceIncrease}>
+                Cao đến Thấp
+              </button>
             </div>
 
-            <div className={cx('paginate')}>
+            {/* <div className={cx('paginate')}>
               <span className={cx('paginate-num')}>
                 <span className={cx('paginate-total')}>1</span>/14
               </span>
@@ -91,7 +118,7 @@ const Products = () => {
               <div className={cx('next', 'btn')}>
                 <FaChevronRight className={cx('icon')} />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className={cx('row', 'products-list')}>
